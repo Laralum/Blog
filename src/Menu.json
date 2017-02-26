@@ -1,0 +1,12 @@
+{
+    "items": [
+        {
+            "trans": "laralum_blog::general.categories",
+            "route": "laralum::blog.categories.index"
+        },
+        {
+            "trans": "laralum_blog::general.create_category",
+            "route": "laralum::blog.categories.create"
+        }
+    ]
+}
