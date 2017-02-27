@@ -13,9 +13,9 @@
     <div class="uk-child-width-1-3@l uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
         @foreach ($categories as $category)
             <div>
-                <a href="{{ route('laralum::blog.categories.show', ['category', $category->id]) }}" style="text-decoration:none;">
+                <a href="{{ route('laralum::blog.categories.show', ['category' => $category->id]) }}" style="text-decoration:none;">
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <h3 class="uk-card-title">{{ $category->title}}</h3>
+                        <h3 class="uk-card-title">{{ $category->title }}</h3>
                         <p>{{ $category->description }}</p>
                     </div>
                 </a>
