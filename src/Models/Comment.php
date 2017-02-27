@@ -6,8 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model {
 
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
 	protected $table = 'laralum_blog_comments';
-	public $timestamps = true;
+
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['user_id', 'post_id', 'comment'];
+
 
 	public function post()
 	{

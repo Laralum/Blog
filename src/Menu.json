@@ -1,7 +1,7 @@
 {
     "items": [
         {
-            "trans": "laralum_blog::general.categories",
+            "trans": "laralum_blog::general.category_list",
             "route": "laralum::blog.categories.index"
         },
         {

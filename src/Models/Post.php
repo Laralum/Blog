@@ -6,10 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model {
 
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
 	protected $table = 'laralum_blog_posts';
-	public $timestamps = true;
 
-	public function blog()
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['user_id', 'category_id', 'title', 'content'];
+
+
+	public function category()
 	{
 		return $this->belongsTo('Laralum\Blog\Models\Category');
 	}

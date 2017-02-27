@@ -4,6 +4,9 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Post;
+use Laralum\Blog\Models\Comment;
 
 class CategoryController extends Controller
 {
@@ -24,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('laralum_blog::categories.create');
     }
 
     /**
@@ -35,27 +38,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5|max:50',
+            'description' => 'required|max:100',
+        ]);
+        Category::create($request->all());
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
         //
     }
@@ -64,10 +60,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -75,11 +71,30 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function confirmDestroy(Category $category)
     {
-        //
+
+        return view('laralum::pages.confirmation', [
+            'method' => 'DELETE',
+            'action' => route('laralum::blog.categories.destroy', ['category' => $category->id]),
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Laralum\Blog\Models\Category $category
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Category $category)
+    {
+        $category->deleteComments();
+        $category->deletePosts();
+        $category->delete();
+
+        return redirect()->route('laralum::blog.categories.index');
     }
 }
