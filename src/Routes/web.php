@@ -13,7 +13,7 @@ Route::group([
         // https://laravel.com/docs/5.4/controllers#resource-controllers
 
         Route::get('categories/{category}/delete', 'CategoryController@confirmDestroy')->name('categories.destroy.confirm');
-        Route::resource('categories', 'CategoryController', ['except' => ['show']]);
+        Route::resource('categories', 'CategoryController');
 
         Route::get('posts/{post}/delete', 'PostController@confirmDestroy')->name('blog.posts.destroy.confirm');
         Route::resource('categories.posts', 'PostController');

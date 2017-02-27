@@ -17,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('laralum_blog::categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -43,6 +44,18 @@ class CategoryController extends Controller
             'description' => 'required|max:100',
         ]);
         Category::create($request->all());
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_added'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Laralum\Blog\Models\Category $category
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Category $category)
+    {
+        return view('laralum_blog::categories.show', ['category', $category]);
     }
 
     /**
