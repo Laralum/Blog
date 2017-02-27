@@ -31,6 +31,14 @@ class Post extends Model {
 		return $this->hasMany('Laralum\Blog\Models\Comment');
 	}
 
+
+	public function deleteComments()
+	{
+		foreach($this->comments as $comment) {
+			$comment->delete();
+		}
+	}
+
 	public function user()
 	{
 		return $this->belongsTo('Laralum\Users\Models\User');

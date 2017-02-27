@@ -4,28 +4,13 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Post;
+use Laralum\Blog\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,20 +18,19 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category, Post $post)
     {
-        //
-    }
+        $this->validate($request, [
+            'comment' => 'required|min:5|max:500',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        Comment::create([
+            'user_id' => Auth::id(),
+            'post_id' => $post->id,
+            'comment' => $request->comment,
+        ]);
+
+        return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_sent'));
     }
 
     /**

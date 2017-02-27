@@ -4,27 +4,22 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Post;
+use Laralum\Blog\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category)
     {
-        //
+        return view('laralum_blog::posts.create', ['category' => $category]);
     }
 
     /**
@@ -33,9 +28,19 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5|max:60',
+            'content' => 'required|max:1500',
+        ]);
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => Auth::id(),
+            'category_id' => $category->id,
+        ]);
+        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::category_created'));
     }
 
     /**
@@ -44,9 +49,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category, Post $post)
     {
-        //
+        return view('laralum_blog::posts.show', ['post' => $post]);
     }
 
     /**
@@ -55,9 +60,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category, Post $post)
     {
-        //
+        return view('laralum_blog::posts.edit', ['post' => $post]);
     }
 
     /**
@@ -67,10 +72,35 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category, Post $post)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5|max:60',
+            'content' => 'required|max:1500',
+        ]);
+
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category, 'post' => $post])->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));
     }
+
+    /**
+     * confirm destroy of the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDestroy(Request $request, Category $category, Post $post)
+    {
+        return view('laralum::pages.confirmation', [
+            'method' => 'DELETE',
+            'action' => route('laralum::blog.categories.posts.destroy', ['category' => $category->id, 'post' => $post->id]),
+        ]);
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +108,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category, Post $post)
     {
-        //
+        $post->deleteComments();
+        $post->delete();
+        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));
     }
 }

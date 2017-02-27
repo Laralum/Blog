@@ -15,9 +15,9 @@ Route::group([
         Route::get('categories/{category}/delete', 'CategoryController@confirmDestroy')->name('categories.destroy.confirm');
         Route::resource('categories', 'CategoryController');
 
-        Route::get('posts/{post}/delete', 'PostController@confirmDestroy')->name('blog.posts.destroy.confirm');
-        Route::resource('categories.posts', 'PostController');
+        Route::get('categories/{category}/posts/{post}/delete', 'PostController@confirmDestroy')->name('categories.posts.destroy.confirm');
+        Route::resource('categories.posts', 'PostController', ['except' => ['index']]);
 
-        Route::get('comments/{role}/delete', 'CommentController@confirmDestroy')->name('blog.comments.destroy.confirm');
-        Route::resource('cateogories.posts.comments', 'CommentController', ['except' => ['index', 'show', 'create']]);
+        Route::get('categories/{category}/posts/{post}/comment/{comment}/delete', 'CommentController@confirmDestroy')->name('categories.posts.comments.destroy.confirm');
+        Route::resource('categories.posts.comments', 'CommentController', ['only' => ['store', 'update', 'destroy']]);
 });

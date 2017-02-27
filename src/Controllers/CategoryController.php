@@ -55,7 +55,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('laralum_blog::categories.show', ['category', $category]);
+        return view('laralum_blog::categories.show', ['category' => $category]);
     }
 
     /**
@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('laralum_blog::categories.edit', ['category' => $category]);
     }
 
     /**
@@ -78,7 +78,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5|max:50',
+            'description' => 'required|max:100',
+        ]);
+        $category->update($request->all());
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_updated',['id' => $category->id]));
     }
 
     /**
