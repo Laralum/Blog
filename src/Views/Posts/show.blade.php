@@ -27,8 +27,8 @@
                 <div class="uk-grid-small uk-child-width-1-1" uk-grid>
                     <span>
                         <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
-                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.destroy.confirm', ['category' => $post->category->id, 'post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
-                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.edit', ['category' => $post->category->id, 'post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</a>
+                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.destroy.confirm', ['category' => $post->category->id, 'post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete_post')</a>
+                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.edit', ['category' => $post->category->id, 'post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit_post')</a>
                     </span>
                 </div>
 
@@ -44,6 +44,7 @@
                 @foreach ($post->comments as $comment)
                     <article class="uk-comment uk-comment-primary">
                         <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+
                             <div class="uk-width-auto">
                                 <img class="uk-comment-avatar uk-border-circle" src="{{ $comment->user->avatar() }}" width="80" height="80" alt="">
                             </div>
@@ -55,6 +56,8 @@
                             </div>
                         </header>
                         <div class="uk-comment-body">
+                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.comments.destroy.confirm',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
+                            <button class="uk-button uk-button-text uk-align-right edit-comment-button" url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
                             <p>{{ $comment->comment }}</p>
                         </div>
                     </article>
@@ -77,7 +80,7 @@
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
                                     <div class="uk-form-controls">
-                                        <textarea name="comment" class="uk-textarea" rows="5" placeholder="@lang('laralum_blog::general.write_a_comment')">{{ old('comment') }}</textarea>
+                                        <textarea name="comment" class="uk-textarea" rows="4" placeholder="{{ __('laralum_blog::general.write_a_comment') }}">{{ old('comment') }}</textarea>
                                     </div>
                                 </div>
 
@@ -94,7 +97,38 @@
         </div>
     </div>
 
+    <form id="edit-comment-form" style="display:none;">
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
+        <fieldset class="uk-fieldset">
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <textarea name="comment" class="uk-textarea" rows="3" id="comment-textarea" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
+                </div>
+            </div>
 
+            <div class="uk-margin">
+                <button type="submit" class="uk-button uk-button-primary">
+                    <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.edit')
+                </button>
+            </div>
+        </fieldset>
+    </form>
 
 </div>
+@endsection
+@section('js')
+    <script>
+        $(function() {
+            $('.edit-comment-button').click(function() {
+                $(this).attr('disabled', 'disabled');
+                var url = $(this).attr('url');
+                var comment = $(this).next().html();
+                $('#comment-textarea').html(comment);
+                var form = $('#edit-comment-form').html();
+                $('.edit-comment-form').hide();
+                $(this).next().html('<form class="uk-form-stacked edit-comment-form" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form>');
+            });
+        });
+    </script>
 @endsection

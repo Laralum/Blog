@@ -23,12 +23,13 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">@lang('laralum_blog::general.description')</label>
                                 <div class="uk-form-controls">
-                                    <textarea name="description" class="uk-textarea" rows="5" placeholder="@lang('laralum_blog::general.description')">{{ old('description', isset($category) ? $category->description : '') }}</textarea>
+                                    <textarea name="description" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.description') }}">{{ old('description', isset($category) ? $category->description : '') }}</textarea>
                                 </div>
                             </div>
 
                             <div class="uk-margin">
-                                <button type="submit" class="uk-button uk-button-primary">
+                            @if(isset($category)) <a href="{{ route('laralum::blog.categories.index') }}" class="uk-button uk-button-default uk-align-left">@lang('laralum_blog::general.cancel')</a> @endif
+                                <button type="submit" class="uk-button uk-button-primary uk-align-right">
                                     <span class="ion-forward"></span>&nbsp; {{ $button }}
                                 </button>
                             </div>

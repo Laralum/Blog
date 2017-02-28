@@ -34,26 +34,38 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category, Post $post, Comment $comment)
     {
-        //
+        $this->validate($request, [
+            'comment' => 'required|min:5|max:500',
+        ]);
+
+        $comment->update([
+            'comment' => $request->comment
+        ]);
+
+        return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_updated', ['id' => $comment->id]));
+
+    }
+
+    /**
+     * confirm destroy of the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDestroy(Request $request, Category $category, Post $post, Comment $comment)
+    {
+        return view('laralum::pages.confirmation', [
+            'method' => 'DELETE',
+            'message' => __('laralum_blog::general.sure_del_comment', ['comment' => $comment->comment]),
+            'action' => route('laralum::blog.categories.posts.comments.destroy', ['category' => $category->id, 'post' => $post->id, 'comment' => $comment->id]),
+        ]);
     }
 
     /**
@@ -62,8 +74,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category, Post $post, Comment $comment)
     {
-        //
+        $comment->delete();
+        return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_deleted', ['id' => $comment->id]));
     }
 }

@@ -96,6 +96,7 @@ class PostController extends Controller
     {
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
+            'message' => __('laralum_blog::general.sure_del_post', ['post' => $post->title]),
             'action' => route('laralum::blog.categories.posts.destroy', ['category' => $category->id, 'post' => $post->id]),
         ]);
 

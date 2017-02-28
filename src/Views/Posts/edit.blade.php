@@ -16,6 +16,7 @@
         'title' => __('laralum_blog::general.edit_post'),
         'method' => 'PATCH',
         'post' => $post,
+        'category' => $post->category,
         'cancel' => route('laralum::blog.categories.posts.show', ['category' => $post->category->id, 'post' => $post->id])
     ])
 @endsection

@@ -97,6 +97,7 @@ class CategoryController extends Controller
 
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
+            'message' => __('laralum_blog::general.sure_del_category', ['category' => $category->title]),
             'action' => route('laralum::blog.categories.destroy', ['category' => $category->id]),
         ]);
     }
