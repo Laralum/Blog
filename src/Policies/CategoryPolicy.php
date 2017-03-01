@@ -4,8 +4,9 @@ namespace Laralum\Blog\Policies;
 
 use Laralum\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Laralum\Blog\Models\Category;
 
-class BlogPolicy
+class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -23,14 +24,14 @@ class BlogPolicy
     }
 
     /**
-     * Determine if the current user can access blog module.
+     * Determine if the current user can access categories.
      *
      * @param  mixed $user
      * @return bool
      */
     public function access($user)
     {
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.access');
+        return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.access');
     }
 
 
@@ -46,7 +47,18 @@ class BlogPolicy
     }
 
     /**
-     * Determine if the current user can update cateogories.
+     * Determine if the current user can view categories.
+     *
+     * @param  mixed $user
+     * @return bool
+     */
+    public function view($user)
+    {
+        return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.view');
+    }
+
+    /**
+     * Determine if the current user can update categories.
      *
      * @param  mixed $user
      * @return bool

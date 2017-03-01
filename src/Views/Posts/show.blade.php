@@ -37,32 +37,39 @@
     </div>
     </div>
     <br><br><br>
-
-    <div id="comments">
-        <div class="uk-card uk-card-default uk-card-body">
-            <h3 class="uk-card-title">@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
+    @can('access', \Laralum\Blog\Models\Comment::class)
+        <div id="comments">
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3 class="uk-card-title">@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
                 @foreach ($post->comments as $comment)
-                    <article class="uk-comment uk-comment-primary">
-                        <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+                    @can('view', $comment)
+                        <article class="uk-comment uk-comment-primary">
+                            <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
 
-                            <div class="uk-width-auto">
-                                <img class="uk-comment-avatar uk-border-circle" src="{{ $comment->user->avatar() }}" width="80" height="80" alt="">
+                                <div class="uk-width-auto">
+                                    <img class="uk-comment-avatar uk-border-circle" src="{{ $comment->user->avatar() }}" width="80" height="80" alt="">
+                                </div>
+                                <div class="uk-width-expand">
+                                    <h4 class="uk-comment-title uk-margin-remove"><span>{{ $comment->user->name }}</span></h4>
+                                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                        <li><span>{{ $comment->created_at->diffForHumans() }}</span></li>
+                                    </ul>
+                                </div>
+                            </header>
+                            <div class="uk-comment-body">
+                                @can('delete', $comment)
+                                    <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.comments.destroy.confirm',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
+                                @endcan
+                                @can('update', $comment)
+                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
+                                @endcan
+                                <p>{{ $comment->comment }}</p>
                             </div>
-                            <div class="uk-width-expand">
-                                <h4 class="uk-comment-title uk-margin-remove"><span>{{ $comment->user->name }}</span></h4>
-                                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                    <li><span>{{ $comment->created_at->diffForHumans() }}</span></li>
-                                </ul>
-                            </div>
-                        </header>
-                        <div class="uk-comment-body">
-                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.comments.destroy.confirm',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
-                            <button class="uk-button uk-button-text uk-align-right edit-comment-button" url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
-                            <p>{{ $comment->comment }}</p>
-                        </div>
-                    </article>
-                    <br>
+                        </article>
+                        <br>
+                    @endcan
                 @endforeach
+                @can('create', \Laralum\Blog\Models\Comment::class)
                 <article class="uk-comment uk-comment-primary">
                     <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
                         <div class="uk-width-auto">
@@ -91,29 +98,29 @@
                                 </div>
                             </fieldset>
                         </form>
-
                     </div>
                 </article>
+                @endcan
+            </div>
         </div>
-    </div>
-
-    <form id="edit-comment-form" style="display:none;">
-        {{ csrf_field() }}
-        {{ method_field('PATCH') }}
-        <fieldset class="uk-fieldset">
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <textarea name="comment" class="uk-textarea" rows="3" id="comment-textarea" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
+        <form id="edit-comment-form" class="uk-hidden">
+            {{ csrf_field() }}
+            {{ method_field('PATCH') }}
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <textarea name="comment" class="uk-textarea" rows="3" id="comment-textarea" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-margin">
-                <button type="submit" class="uk-button uk-button-primary">
-                    <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.edit')
-                </button>
-            </div>
-        </fieldset>
-    </form>
+                <div class="uk-margin">
+                    <button type="submit" class="uk-button uk-button-primary">
+                        <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.edit')
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    @endcan
 
 </div>
 @endsection

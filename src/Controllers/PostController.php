@@ -19,6 +19,7 @@ class PostController extends Controller
      */
     public function create(Category $category)
     {
+        $this->authorize('create', Post::class);
         return view('laralum_blog::posts.create', ['category' => $category]);
     }
 
@@ -30,6 +31,7 @@ class PostController extends Controller
      */
     public function store(Request $request, Category $category)
     {
+        $this->authorize('create', Post::class);
         $this->validate($request, [
             'title' => 'required|min:5|max:60',
             'content' => 'required|max:1500',
@@ -51,6 +53,7 @@ class PostController extends Controller
      */
     public function show(Category $category, Post $post)
     {
+        $this->authorize('view', $post);
         return view('laralum_blog::posts.show', ['post' => $post]);
     }
 
@@ -62,6 +65,7 @@ class PostController extends Controller
      */
     public function edit(Category $category, Post $post)
     {
+        $this->authorize('update', $post);
         return view('laralum_blog::posts.edit', ['post' => $post]);
     }
 
@@ -74,6 +78,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Category $category, Post $post)
     {
+        $this->authorize('update', $post);
         $this->validate($request, [
             'title' => 'required|min:5|max:60',
             'content' => 'required|max:1500',
@@ -94,6 +99,7 @@ class PostController extends Controller
      */
     public function confirmDestroy(Request $request, Category $category, Post $post)
     {
+        $this->authorize('delete', $post);
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_post', ['post' => $post->title]),
@@ -111,6 +117,7 @@ class PostController extends Controller
      */
     public function destroy(Category $category, Post $post)
     {
+        $this->authorize('delete', $post);
         $post->deleteComments();
         $post->delete();
         return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));

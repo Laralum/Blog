@@ -20,6 +20,8 @@ class CommentController extends Controller
      */
     public function store(Request $request, Category $category, Post $post)
     {
+        $this->authorize('create', Comment::class);
+
         $this->validate($request, [
             'comment' => 'required|min:5|max:500',
         ]);
@@ -42,6 +44,8 @@ class CommentController extends Controller
      */
     public function update(Request $request, Category $category, Post $post, Comment $comment)
     {
+        $this->authorize('update', $comment);
+
         $this->validate($request, [
             'comment' => 'required|min:5|max:500',
         ]);
@@ -61,6 +65,8 @@ class CommentController extends Controller
      */
     public function confirmDestroy(Request $request, Category $category, Post $post, Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_comment', ['comment' => $comment->comment]),
@@ -76,6 +82,8 @@ class CommentController extends Controller
      */
     public function destroy(Category $category, Post $post, Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         $comment->delete();
         return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_deleted', ['id' => $comment->id]));
     }

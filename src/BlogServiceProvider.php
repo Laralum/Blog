@@ -5,8 +5,12 @@ namespace Laralum\Blog;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
-use Laralum\Blog\Models\Blog;
-use Laralum\Blog\Policies\BlogPolicy;
+use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Post;
+use Laralum\Blog\Policies\CategoryPolicy;
+use Laralum\Blog\Policies\CommentPolicy;
+use Laralum\Blog\Policies\PostPolicy;
 
 use Laralum\Permissions\PermissionsChecker;
 
@@ -19,7 +23,9 @@ class BlogServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Blog::class => BlogPolicy::class,
+        Category::class => CategoryPolicy::class,
+        Comment::class => CommentPolicy::class,
+        Post::class => PostPolicy::class,
     ];
 
     /**
@@ -29,29 +35,79 @@ class BlogServiceProvider extends ServiceProvider
      */
     protected $permissions = [
         [
-            'name' => 'Blog Access',
-            'slug' => 'laralum::blog.access',
-            'desc' => "Grants access to laralum/blog module",
+            'name' => 'Blog Categories Access',
+            'slug' => 'laralum::blog.categories.access',
+            'desc' => "Grants access to blog categories",
         ],
         [
-            'name' => 'Create Category',
-            'slug' => 'laralum::blog.cateogories.create',
-            'desc' => "Allows creating cateogries",
+            'name' => 'Create Blog Categories',
+            'slug' => 'laralum::blog.categories.create',
+            'desc' => "Allows creating blog categories",
         ],
         [
-            'name' => 'Update Category',
-            'slug' => 'laralum::blog.cateogories.update',
-            'desc' => "Allows updating categories",
+            'name' => 'Update Blog Categories',
+            'slug' => 'laralum::blog.categories.update',
+            'desc' => "Allows updating blog categories",
         ],
         [
-            'name' => 'View Categories',
-            'slug' => 'laralum::blog.cateogories.view',
-            'desc' => "Allows view categories",
+            'name' => 'View Blog Categories',
+            'slug' => 'laralum::blog.categories.view',
+            'desc' => "Allows view blog categories",
         ],
         [
-            'name' => 'Delete Categories',
-            'slug' => 'laralum::blog.cateogories.delete',
-            'desc' => "Allows delete categories",
+            'name' => 'Delete Blog Categories',
+            'slug' => 'laralum::blog.categories.delete',
+            'desc' => "Allows delete blog categories",
+        ],
+        [
+            'name' => 'Blog Posts Access',
+            'slug' => 'laralum::blog.posts.access',
+            'desc' => "Grants access to blog posts",
+        ],
+        [
+            'name' => 'Create Blog Posts',
+            'slug' => 'laralum::blog.posts.create',
+            'desc' => "Allows creating blog posts",
+        ],
+        [
+            'name' => 'Update Blog Posts',
+            'slug' => 'laralum::blog.posts.update',
+            'desc' => "Allows updating blog posts",
+        ],
+        [
+            'name' => 'View Blog Posts',
+            'slug' => 'laralum::blog.posts.view',
+            'desc' => "Allows view blog posts",
+        ],
+        [
+            'name' => 'Delete Blog Posts',
+            'slug' => 'laralum::blog.posts.delete',
+            'desc' => "Allows delete blog posts",
+        ],
+        [
+            'name' => 'Blog Comments Access',
+            'slug' => 'laralum::blog.comments.access',
+            'desc' => "Grants access to blog comments",
+        ],
+        [
+            'name' => 'Create Blog Comments',
+            'slug' => 'laralum::blog.comments.create',
+            'desc' => "Allows creating blog comments",
+        ],
+        [
+            'name' => 'Update Blog Comments',
+            'slug' => 'laralum::blog.comments.update',
+            'desc' => "Allows updating blog comments",
+        ],
+        [
+            'name' => 'View Blog Comments',
+            'slug' => 'laralum::blog.comments.view',
+            'desc' => "Allows view blog comments",
+        ],
+        [
+            'name' => 'Delete Blog Comments',
+            'slug' => 'laralum::blog.comments.delete',
+            'desc' => "Allows delete blog comments",
         ],
     ];
 
