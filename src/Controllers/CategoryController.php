@@ -28,7 +28,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Category::class);
         return view('laralum_blog::categories.create');
     }
 
@@ -40,7 +39,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Category::class);
         $this->validate($request, [
             'title' => 'required|min:5|max:50',
             'description' => 'required|max:100',
@@ -57,7 +55,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $this->authorize('view', Category::class);
         return view('laralum_blog::categories.show', ['category' => $category]);
     }
 
@@ -69,7 +66,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $this->authorize('update', Category::class);
         return view('laralum_blog::categories.edit', ['category' => $category]);
     }
 
@@ -82,7 +78,6 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $this->authorize('update', Category::class);
         $this->validate($request, [
             'title' => 'required|min:5|max:50',
             'description' => 'required|max:100',
@@ -99,7 +94,7 @@ class CategoryController extends Controller
      */
     public function confirmDestroy(Category $category)
     {
-        $this->authorize('delete', Category::class);
+
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_category', ['category' => $category->title]),
@@ -115,8 +110,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $this->authorize('delete', Category::class);
-
         $category->deleteComments();
         $category->deletePosts();
         $category->delete();

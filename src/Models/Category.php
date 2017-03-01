@@ -3,6 +3,8 @@
 namespace Laralum\Blog\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laralum\Blog\Models\Post;
+use Laralum\Blog\Models\Comment;
 
 class Category extends Model {
 
@@ -28,7 +30,7 @@ class Category extends Model {
 
 	public function comments()
 	{
-		return $this->hasManyThrough('Laralum\Blog\Models\Comment', 'Laralum\Blog\Models\Post');
+		return $this->hasManyThrough(Comment::class, Post::class);
 	}
 
 	public function deletePosts()

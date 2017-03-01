@@ -9,8 +9,8 @@ class CreateLaralumBlogPostsTable extends Migration {
 	{
 		Schema::create('laralum_blog_posts', function(Blueprint $table) {
 			$table->increments('id');
-			$table->tinyInteger('user_id');
-			$table->tinyInteger('blog_id');
+			$table->integer('user_id');
+			$table->integer('category_id');
 			$table->string('title');
 			$table->text('content');
 			$table->timestamps();

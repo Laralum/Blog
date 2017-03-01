@@ -3,6 +3,9 @@
 namespace Laralum\Blog\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Comment;
+use Laralum\Users\Models\User;
 
 class Post extends Model {
 
@@ -23,12 +26,12 @@ class Post extends Model {
 
 	public function category()
 	{
-		return $this->belongsTo('Laralum\Blog\Models\Category');
+		return $this->belongsTo(Category::class);
 	}
 
 	public function comments()
 	{
-		return $this->hasMany('Laralum\Blog\Models\Comment');
+		return $this->hasMany(Comment::class);
 	}
 
 
@@ -41,7 +44,7 @@ class Post extends Model {
 
 	public function user()
 	{
-		return $this->belongsTo('Laralum\Users\Models\User');
+		return $this->belongsTo(User::class);
 	}
 
 }
