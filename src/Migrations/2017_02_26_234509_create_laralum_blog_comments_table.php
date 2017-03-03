@@ -18,6 +18,6 @@ class CreateLaralumBlogCommentsTable extends Migration {
 
 	public function down()
 	{
-		Schema::drop('laralum_blog_comments');
+		Schema::dropIfExists('laralum_blog_comments');
 	}
 }

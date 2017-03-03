@@ -17,6 +17,6 @@ class CreateLaralumBlogCategoriesTable extends Migration {
 
 	public function down()
 	{
-		Schema::drop('laralum_blog_categories');
+		Schema::dropIfExists('laralum_blog_categories');
 	}
 }
