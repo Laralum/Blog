@@ -128,6 +128,8 @@ class BlogServiceProvider extends ServiceProvider
             require __DIR__.'/Routes/web.php';
         }
 
+        $this->app->register('GrahamCampbell\\Markdown\\MarkdownServiceProvider');
+
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
 
         // Make sure the permissions are OK

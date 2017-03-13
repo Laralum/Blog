@@ -21,7 +21,7 @@
 
                 <p class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->title])</p>
 
-                <p>{{ $post->content }}</p>
+                <p>{!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($post->content) !!}</p>
 
                 <br>
                 <div class="uk-grid-small uk-child-width-1-1" uk-grid>
@@ -63,7 +63,7 @@
                                 @can('update', $comment)
                                     <button class="uk-button uk-button-text uk-align-right edit-comment-button" url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
                                 @endcan
-                                <p>{{ $comment->comment }}</p>
+                                <p>{!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($comment->comment) !!}</p>
                             </div>
                         </article>
                         <br>

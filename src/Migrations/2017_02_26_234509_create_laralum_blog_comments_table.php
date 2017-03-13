@@ -9,8 +9,8 @@ class CreateLaralumBlogCommentsTable extends Migration {
 	{
 		Schema::create('laralum_blog_comments', function(Blueprint $table) {
 			$table->increments('id');
-			$table->tinyInteger('user_id');
-			$table->tinyInteger('post_id');
+			$table->integer('user_id');
+			$table->integer('post_id');
 			$table->text('comment');
 			$table->timestamps();
 		});

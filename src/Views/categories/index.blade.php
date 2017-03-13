@@ -16,7 +16,7 @@
                 <a href="{{ route('laralum::blog.categories.show', ['category' => $category->id]) }}" class="uk-link-reset">
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
                         <h3 class="uk-card-title">{{ $category->title }}</h3>
-                        <p>{{ str_limit($category->description, $limit = 80, $end = '...') }}</p>
+                        <p>{!! str_limit(\GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($category->description), $limit = 80, $end = '...') !!}</p>
                         <div class="uk-align-right">
                             <a class="uk-link-reset" href="{{ route('laralum::blog.categories.edit', ['id' => $category->id]) }}">
                                 <i style="font-size:20px;" class="icon ion-edit"></i>

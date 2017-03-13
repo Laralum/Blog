@@ -42,7 +42,7 @@ class PostController extends Controller
             'user_id' => Auth::id(),
             'category_id' => $category->id,
         ]);
-        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::category_created'));
+        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::general.category_created'));
     }
 
     /**
