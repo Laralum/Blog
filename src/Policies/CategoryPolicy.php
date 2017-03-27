@@ -63,8 +63,11 @@ class CategoryPolicy
      * @param  mixed $user
      * @return bool
      */
-    public function update($user)
+    public function update($user, Category $category)
     {
+        if ($category->user->id == $user->id) {
+            return true;
+        }
         return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.update');
     }
 
@@ -75,8 +78,11 @@ class CategoryPolicy
      * @param  mixed $user
      * @return bool
      */
-    public function delete($user)
+    public function delete($user, Category $category)
     {
+        if ($category->user->id == $user->id) {
+            return true;
+        }
         return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.delete');
     }
 }

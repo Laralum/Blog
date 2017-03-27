@@ -11,36 +11,40 @@
 @endsection
 @section('content')
 <div class="uk-container uk-container-large">
-    <div class="uk-child-width-1-1 uk-text-center" uk-grid>
-        <center>
-            <a href="{{ route('laralum::blog.categories.posts.create', ['category' => $category->id]) }}">
-                <i style="font-size:35px;" class="ion-plus-circled"></i>
-            </a>
-        </center>
-    </div>
-    <br>
+    <center><a href="{{ route('laralum::blog.categories.posts.create', ['category' => $category->id]) }}" class="uk-button uk-button-primary uk-width-1-3 uk-margin-small-bottom">@lang('laralum_blog::general.create_post')</a></center>
+    <br><br>
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
-    @foreach ($category->posts as $post)
-        <div>
-            <div class="uk-card uk-card-default">
-                <div class="uk-card-header">
-                    <div class="uk-grid-small uk-flex-middle" uk-grid>
-                        <div class="uk-width-expand">
-                            <h3 class="uk-card-title uk-margin-remove-bottom">{{ $post->title }}</h3>
-                            <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
+        @if ($category->posts->count())
+            @foreach ($category->posts as $post)
+                <div>
+                    <div class="uk-card uk-card-default">
+                        <div class="uk-card-header">
+                            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                <div class="uk-width-expand">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ $post->title }}</h3>
+                                    <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-card-body">
+                            <p>{!! str_limit(\GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($post->content), $limit = 150, $end = '...') !!}</p>
+                        </div>
+                        <div class="uk-card-footer">
+                            <a href="{{ route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
+                            <span class="uk-align-right">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
                         </div>
                     </div>
                 </div>
-                <div class="uk-card-body">
-                    <p>{!! str_limit(\GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($post->content), $limit = 150, $end = '...') !!}</p>
-                </div>
-                <div class="uk-card-footer">
-                    <a href="{{ route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
-                    <span class="uk-align-right">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+            @endforeach
+        @else
+            <div class="uk-width-1-1">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div uk-alert>
+                        <p>@lang('laralum_blog::general.no_posts_yet')</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endif
     </div>
 </div>
 @endsection

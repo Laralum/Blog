@@ -20,7 +20,7 @@ class Category extends Model {
      *
      * @var array
      */
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['name'];
 
 
 	public function posts()

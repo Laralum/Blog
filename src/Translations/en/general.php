@@ -13,6 +13,7 @@ return [
     'actions'         => 'Actions',
     'delete'          => 'Delete',
     'edit'            => 'Edit',
+    'update'          => 'Update',
     'create'          => 'Create',
     'description'     => 'Description',
     'submit'          => 'Submit',
@@ -20,6 +21,7 @@ return [
     'edit'            => 'Edit',
     'content'         => 'Content',
     'title'           => 'Title',
+    'view'            => 'View',
 
 
 
@@ -43,6 +45,7 @@ return [
 
     'post'           => 'Post',
     'view_post'      => 'View Post',
+    'no_posts_yet'   => 'There are no posts yet',
     'edit_post'      => 'Edit Post',
     'delete_post'    => 'Delete Post',
     'view_post_desc' => "You're viewing post #:id",

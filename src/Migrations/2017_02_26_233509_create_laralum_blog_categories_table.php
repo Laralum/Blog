@@ -9,8 +9,7 @@ class CreateLaralumBlogCategoriesTable extends Migration {
 	{
 		Schema::create('laralum_blog_categories', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('title');
-			$table->text('description');
+			$table->string('name');
 			$table->timestamps();
 		});
 	}

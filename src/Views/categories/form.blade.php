@@ -14,16 +14,9 @@
 
 
                             <div class="uk-margin">
-                                <label class="uk-form-label">@lang('laralum_blog::general.title')</label>
+                                <label class="uk-form-label">@lang('laralum_blog::general.name')</label>
                                 <div class="uk-form-controls">
-                                    <input value="{{ old('title', isset($category) ? $category->title : '') }}" name="title" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.title')">
-                                </div>
-                            </div>
-
-                            <div class="uk-margin">
-                                <label class="uk-form-label">@lang('laralum_blog::general.description')</label>
-                                <div class="uk-form-controls">
-                                    <textarea name="description" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.description') }}">{{ old('description', isset($category) ? $category->description : '') }}</textarea>
+                                    <input value="{{ old('name', isset($category) ? $category->name : '') }}" name="name" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.name')">
                                 </div>
                             </div>
 
