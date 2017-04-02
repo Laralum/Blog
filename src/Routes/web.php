@@ -2,6 +2,33 @@
 
 Route::group([
         'middleware' => [
+            'web', 'laralum.base', 'auth',
+            'can:publicAccess,Laralum\Blog\Models\Comment',
+        ],
+        'namespace' => 'Laralum\Blog\Controllers',
+        'as' => 'laralum_public::'
+    ], function () {
+        if (\Illuminate\Support\Facades\Schema::hasTable('laralum_blog_settings')) {
+            $public_url = \Laralum\Blog\Models\Settings::first()->public_url;
+        } else {
+            $public_url = 'blog';
+        }
+        Route::resource($public_url, 'PublicCommentController', [
+            'names' => [
+                'store' => 'blog.categories.posts.comments.store',
+                'edit' => 'blog.categories.posts.comments.update',
+                'update' => 'blog.categories.posts.comments.update',
+                'destroy' => 'blog.categories.posts.comments.destroy',
+            ],
+            'only' => [
+                'store', 'update', 'destroy'
+            ],
+        ]);
+});
+
+
+Route::group([
+        'middleware' => [
             'web', 'laralum.base', 'laralum.auth',
             'can:access,Laralum\Blog\Models\Category',
         ],
@@ -36,4 +63,16 @@ Route::group([
                         Route::resource('categories.posts.comments', 'CommentController', ['only' => ['store', 'update', 'destroy']]);
                 });
         });
+});
+
+Route::group([
+        'middleware' => [
+            'web', 'laralum.base', 'laralum.auth',
+            'can:access,Laralum\Blog\Models\Settings',
+        ],
+        'prefix' => config('laralum.settings.base_url'),
+        'namespace' => 'Laralum\Blog\Controllers',
+        'as' => 'laralum::blog.'
+    ], function () {
+        Route::post('/blog/settings', 'SettingsController@update')->name('settings.update');
 });

@@ -19,12 +19,20 @@
                                     <input value="{{ old('title', isset($post) ? $post->title : '') }}" name="title" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.title')">
                                 </div>
                             </div>
-
                             <div class="uk-margin">
                                 <label class="uk-form-label">@lang('laralum_blog::general.content')</label>
-                                <div class="uk-form-controls">
-                                    <textarea name="content" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.content') }}">{{ old('description', isset($post) ? $post->content : '') }}</textarea>
-                                </div>
+                                @if ($settings->text_editor == 'wysiwyg')
+                                    <textarea name="content">
+                                        {{ old('content', $content->content) }}
+                                    </textarea>
+                                @else
+                                    <textarea name="content" class="uk-textarea" rows="5" placeholder="{{ __('laralum_tickets::general.content') }}">{{ old('content') }}</textarea>
+                                    @if ($settings->text_editor == 'markdown')
+                                        <i>@lang('laralum_tickets::general.markdown')</i>
+                                    @else
+                                        <i>@lang('laralum_tickets::general.plain_text')</i>
+                                    @endif
+                                @endif
                             </div>
 
                             <div class="uk-margin">

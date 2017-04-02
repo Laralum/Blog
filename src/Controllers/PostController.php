@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Settings;
 use Illuminate\Support\Facades\Auth;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class PostController extends Controller
 {
@@ -20,7 +22,7 @@ class PostController extends Controller
     public function create(Category $category)
     {
         $this->authorize('create', Post::class);
-        return view('laralum_blog::posts.create', ['category' => $category]);
+        return view('laralum_blog::.laralum.posts.create', ['category' => $category]);
     }
 
     /**
@@ -33,12 +35,21 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
         $this->validate($request, [
-            'title' => 'required|min:5|max:60',
-            'content' => 'required|max:1500',
+            'title' => 'required|max:255',
+            'content' => 'required|max:2000',
         ]);
+
+        if (Settings::first()->text_editor == "markdown") {
+            $msg = Markdown::convertToHtml($request->content);
+        } elseif (Settings::first()->text_editor == "wysiwyg") {
+            $msg = $request->content;
+        } else {
+            $msg = htmlentities($request->content);
+        }
+
         Post::create([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => $msg,
             'user_id' => Auth::id(),
             'category_id' => $category->id,
         ]);
@@ -54,7 +65,7 @@ class PostController extends Controller
     public function show(Category $category, Post $post)
     {
         $this->authorize('view', $post);
-        return view('laralum_blog::posts.show', ['post' => $post]);
+        return view('laralum_blog::.laralum.posts.show', ['post' => $post]);
     }
 
     /**
@@ -66,7 +77,7 @@ class PostController extends Controller
     public function edit(Category $category, Post $post)
     {
         $this->authorize('update', $post);
-        return view('laralum_blog::posts.edit', ['post' => $post]);
+        return view('laralum_blog::.laralum.posts.edit', ['post' => $post]);
     }
 
     /**
@@ -84,9 +95,17 @@ class PostController extends Controller
             'content' => 'required|max:1500',
         ]);
 
+        if (Settings::first()->text_editor == "markdown") {
+            $msg = Markdown::convertToHtml($request->content);
+        } elseif (Settings::first()->text_editor == "wysiwyg") {
+            $msg = $request->content;
+        } else {
+            $msg = htmlentities($request->content);
+        }
+
         $post->update([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => $msg,
         ]);
 
         return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category, 'post' => $post])->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));

@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Gate;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Comment;
 use Laralum\Blog\Models\Post;
+use Laralum\Blog\Models\Settings;
 use Laralum\Blog\Policies\CategoryPolicy;
 use Laralum\Blog\Policies\CommentPolicy;
 use Laralum\Blog\Policies\PostPolicy;
+use Laralum\Blog\Policies\SettingsPolicy;
 
 use Laralum\Permissions\PermissionsChecker;
 
@@ -26,6 +28,7 @@ class BlogServiceProvider extends ServiceProvider
         Category::class => CategoryPolicy::class,
         Comment::class => CommentPolicy::class,
         Post::class => PostPolicy::class,
+        Settings::class => SettingsPolicy::class,
     ];
 
     /**
@@ -108,6 +111,11 @@ class BlogServiceProvider extends ServiceProvider
             'name' => 'Delete Blog Comments',
             'slug' => 'laralum::blog.comments.delete',
             'desc' => "Allows delete blog comments",
+        ],
+        [
+            'name' => 'Update Blog Settings',
+            'slug' => 'laralum::blog.settings',
+            'desc' => "Allows update blog settings",
         ],
     ];
 

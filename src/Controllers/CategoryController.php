@@ -20,7 +20,7 @@ class CategoryController extends Controller
         $this->authorize('view', Category::class);
 
         $categories = Category::all();
-        return view('laralum_blog::categories.index', ['categories' => $categories]);
+        return view('laralum_blog::laralum.categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     {
         $this->authorize('create', Category::class);
 
-        return view('laralum_blog::categories.create');
+        return view('laralum_blog::laralum.categories.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $this->authorize('create', Category::class);
 
         $this->validate($request, [
-            'name' => 'required|min:5|max:50',
+            'name' => 'required|max:255',
         ]);
         Category::create($request->all());
         return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_added'));
@@ -62,7 +62,7 @@ class CategoryController extends Controller
     {
         $this->authorize('view', Category::class);
 
-        return view('laralum_blog::categories.show', ['category' => $category]);
+        return view('laralum_blog::laralum.categories.show', ['category' => $category]);
     }
 
     /**
@@ -75,7 +75,7 @@ class CategoryController extends Controller
     {
         $this->authorize('update', $category);
 
-        return view('laralum_blog::categories.edit', ['category' => $category]);
+        return view('laralum_blog::laralum.categories.edit', ['category' => $category]);
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         $this->authorize('update', $category);
 
         $this->validate($request, [
-            'name' => 'required|min:5|max:50',
+            'name' => 'required|max:255',
         ]);
         $category->update($request->all());
         return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_updated',['id' => $category->id]));

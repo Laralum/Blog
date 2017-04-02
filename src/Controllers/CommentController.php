@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Settings;
 use Illuminate\Support\Facades\Auth;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class CommentController extends Controller
 {
@@ -23,13 +25,21 @@ class CommentController extends Controller
         $this->authorize('create', Comment::class);
 
         $this->validate($request, [
-            'comment' => 'required|min:5|max:500',
+            'comment' => 'required|max:500',
         ]);
+
+        if (Settings::first()->text_editor == "markdown") {
+            $msg = Markdown::convertToHtml($request->comment);
+        } elseif (Settings::first()->text_editor == "wysiwyg") {
+            $msg = $request->comment;
+        } else {
+            $msg = htmlentities($request->comment);
+        }
 
         Comment::create([
             'user_id' => Auth::id(),
             'post_id' => $post->id,
-            'comment' => $request->comment,
+            'comment' => $msg,
         ]);
 
         return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_sent'));
@@ -47,11 +57,19 @@ class CommentController extends Controller
         $this->authorize('update', $comment);
 
         $this->validate($request, [
-            'comment' => 'required|min:5|max:500',
+            'comment' => 'required|max:500',
         ]);
 
+        if (Settings::first()->text_editor == "markdown") {
+            $msg = Markdown::convertToHtml($request->comment);
+        } elseif (Settings::first()->text_editor == "wysiwyg") {
+            $msg = $request->comment;
+        } else {
+            $msg = htmlentities($request->comment);
+        }
+
         $comment->update([
-            'comment' => $request->comment
+            'comment' => $msg
         ]);
 
         return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])->with('success', __('laralum_blog::general.comment_updated', ['id' => $comment->id]));
