@@ -1,4 +1,7 @@
 @extends('laralum::layouts.master')
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 @section('icon', 'ion-plus-round')
 @section('title', __('laralum_blog::general.create_post'))
 @section('subtitle', __('laralum_blog::general.create_post_desc'))

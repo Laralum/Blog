@@ -1,4 +1,19 @@
 @extends('laralum::layouts.master')
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
+@section('css')
+    @if ($settings->text_editor == 'wysiwyg')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.5/tinymce.min.js"></script>
+        <script>
+            tinymce.init({ selector:'textarea',   plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ] });
+        </script>
+    @endif
+@endsection
 @section('icon', 'ion-eye')
 @section('title', __('laralum_blog::general.view_post'))
 @section('subtitle', __('laralum_blog::general.view_post_desc', ['id' => $post->id]))
@@ -21,7 +36,7 @@
 
                 <p class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->title])</p>
 
-                <p>{!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($post->content) !!}</p>
+                <p>{!! $post->content !!}</p>
 
                 <br>
                 <div class="uk-grid-small uk-child-width-1-1" uk-grid>
@@ -61,9 +76,9 @@
                                     <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.comments.destroy.confirm',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
                                 @endcan
                                 @can('update', $comment)
-                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
+                                    <a class="uk-button uk-button-text uk-align-right edit-comment-button" href="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</a>
                                 @endcan
-                                <p>{!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($comment->comment) !!}</p>
+                                <p class="comment">{!! $comment->comment !!}</p>
                             </div>
                         </article>
                         <br>
@@ -86,11 +101,18 @@
                             {{ csrf_field() }}
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
-                                    <div class="uk-form-controls">
-                                        <textarea name="comment" class="uk-textarea" rows="4" placeholder="{{ __('laralum_blog::general.write_a_comment') }}">{{ old('comment') }}</textarea>
-                                    </div>
+                                    <br>
+                                    @if ($settings->text_editor == 'wysiwyg')
+                                        <textarea name="comment">{{ old('comment') }}</textarea>
+                                    @else
+                                        <textarea name="comment" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.content') }}">{{ old('comment') }}</textarea>
+                                        @if ($settings->text_editor == 'markdown')
+                                            <i>@lang('laralum_blog::general.markdown')</i>
+                                        @else
+                                            <i>@lang('laralum_blog::general.plain_text')</i>
+                                        @endif
+                                    @endif
                                 </div>
-
                                 <div class="uk-margin">
                                     <button type="submit" class="uk-button uk-button-primary">
                                         <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.submit')
@@ -103,39 +125,6 @@
                 @endcan
             </div>
         </div>
-        <form id="edit-comment-form" class="uk-hidden">
-            {{ csrf_field() }}
-            {{ method_field('PATCH') }}
-            <fieldset class="uk-fieldset">
-                <div class="uk-margin">
-                    <div class="uk-form-controls">
-                        <textarea name="comment" class="uk-textarea" rows="3" id="comment-textarea" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <button type="submit" class="uk-button uk-button-primary">
-                        <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.edit')
-                    </button>
-                </div>
-            </fieldset>
-        </form>
     @endcan
-
 </div>
-@endsection
-@section('js')
-    <script>
-        $(function() {
-            $('.edit-comment-button').click(function() {
-                $(this).attr('disabled', 'disabled');
-                var url = $(this).attr('url');
-                var comment = $(this).next().html();
-                $('#comment-textarea').html(comment);
-                var form = $('#edit-comment-form').html();
-                $('.edit-comment-form').hide();
-                $(this).next().html('<form class="uk-form-stacked edit-comment-form" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form>');
-            });
-        });
-    </script>
 @endsection

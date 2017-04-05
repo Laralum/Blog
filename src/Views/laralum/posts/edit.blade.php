@@ -1,4 +1,7 @@
 @extends('laralum::layouts.master')
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 @section('icon', 'ion-edit')
 @section('title', __('laralum_blog::general.edit_post'))
 @section('subtitle', __('laralum_blog::general.edit_post_desc', ['id' => $post->id, 'time_ago' => $post->created_at->diffForHumans()]))

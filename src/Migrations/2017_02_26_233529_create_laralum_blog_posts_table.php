@@ -12,6 +12,7 @@ class CreateLaralumBlogPostsTable extends Migration {
 			$table->integer('user_id');
 			$table->integer('category_id');
 			$table->string('title');
+			$table->string('description');
 			$table->text('content');
 			$table->timestamps();
 		});

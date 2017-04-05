@@ -113,6 +113,31 @@ class BlogServiceProvider extends ServiceProvider
             'desc' => "Allows delete blog comments",
         ],
         [
+            'name' => 'Blog Comments Access (public)',
+            'slug' => 'laralum::blog.comments.access-public',
+            'desc' => "Grants access to blog comments",
+        ],
+        [
+            'name' => 'Create Blog Comments (public)',
+            'slug' => 'laralum::blog.comments.create-public',
+            'desc' => "Allows creating blog comments",
+        ],
+        [
+            'name' => 'Update Blog Comments (public)',
+            'slug' => 'laralum::blog.comments.update-public',
+            'desc' => "Allows updating blog comments",
+        ],
+        [
+            'name' => 'View Blog Comments (public)',
+            'slug' => 'laralum::blog.comments.view-public',
+            'desc' => "Allows view blog comments",
+        ],
+        [
+            'name' => 'Delete Blog Comments (public)',
+            'slug' => 'laralum::blog.comments.delete-public',
+            'desc' => "Allows delete blog comments",
+        ],
+        [
             'name' => 'Update Blog Settings',
             'slug' => 'laralum::blog.settings',
             'desc' => "Allows update blog settings",

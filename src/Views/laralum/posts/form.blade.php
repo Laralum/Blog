@@ -11,8 +11,6 @@
                         {{ csrf_field() }}
                         @if(isset($method)) {{ method_field($method) }} @endif
                         <fieldset class="uk-fieldset">
-
-
                             <div class="uk-margin">
                                 <label class="uk-form-label">@lang('laralum_blog::general.title')</label>
                                 <div class="uk-form-controls">
@@ -20,17 +18,32 @@
                                 </div>
                             </div>
                             <div class="uk-margin">
+                                <label class="uk-form-label">@lang('laralum_blog::general.description')</label>
+                                <div class="uk-form-controls">
+                                    <input value="{{ old('description', isset($post) ? $post->description : '') }}" name="description" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.description')">
+                                </div>
+                            </div>
+                            <div class="uk-margin">
                                 <label class="uk-form-label">@lang('laralum_blog::general.content')</label>
                                 @if ($settings->text_editor == 'wysiwyg')
                                     <textarea name="content">
-                                        {{ old('content', $content->content) }}
+                                        {{ old('content', isset($post) ? $post->content : '') }}
                                     </textarea>
                                 @else
-                                    <textarea name="content" class="uk-textarea" rows="5" placeholder="{{ __('laralum_tickets::general.content') }}">{{ old('content') }}</textarea>
+                                    @php
+                                    $text = old('content', isset($post) ? $post->content : '');
+                                    if ($settings->text_editor == 'markdown') {
+                                        $converter = new League\HTMLToMarkdown\HtmlConverter();
+                                        $text = $converter->convert($text);
+                                    }
+                                    @endphp
+                                    <textarea name="content" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.content') }}">
+                                        {{ $text }}
+                                    </textarea>
                                     @if ($settings->text_editor == 'markdown')
-                                        <i>@lang('laralum_tickets::general.markdown')</i>
+                                        <i>@lang('laralum_blog::general.markdown')</i>
                                     @else
-                                        <i>@lang('laralum_tickets::general.plain_text')</i>
+                                        <i>@lang('laralum_blog::general.plain_text')</i>
                                     @endif
                                 @endif
                             </div>

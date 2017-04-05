@@ -2,6 +2,24 @@
 
 Route::group([
         'middleware' => [
+            'web', 'laralum.base',
+        ],
+        'namespace' => 'Laralum\Blog\Controllers',
+        'as' => 'laralum_public::'
+    ], function () {
+        if (\Illuminate\Support\Facades\Schema::hasTable('laralum_blog_settings')) {
+            $public_url = \Laralum\Blog\Models\Settings::first()->public_url;
+        } else {
+            $public_url = 'blog';
+        }
+
+        Route::get($public_url, 'PublicCategoryController@index')->name('blog.categories.index');
+        Route::get($public_url.'/categories/{category}', 'PublicCategoryController@show')->name('blog.categories.show');
+        Route::get($public_url.'/categories/{category}/posts/{post}', 'PublicPostController@show')->name('blog.categories.posts.show');
+});
+
+Route::group([
+        'middleware' => [
             'web', 'laralum.base', 'auth',
             'can:publicAccess,Laralum\Blog\Models\Comment',
         ],
@@ -13,6 +31,7 @@ Route::group([
         } else {
             $public_url = 'blog';
         }
+
         Route::resource($public_url, 'PublicCommentController', [
             'names' => [
                 'store' => 'blog.categories.posts.comments.store',

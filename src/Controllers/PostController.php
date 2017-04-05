@@ -22,7 +22,7 @@ class PostController extends Controller
     public function create(Category $category)
     {
         $this->authorize('create', Post::class);
-        return view('laralum_blog::.laralum.posts.create', ['category' => $category]);
+        return view('laralum_blog::laralum.posts.create', ['category' => $category]);
     }
 
     /**
@@ -36,6 +36,7 @@ class PostController extends Controller
         $this->authorize('create', Post::class);
         $this->validate($request, [
             'title' => 'required|max:255',
+            'description' => 'required|max:255',
             'content' => 'required|max:2000',
         ]);
 
@@ -49,6 +50,7 @@ class PostController extends Controller
 
         Post::create([
             'title' => $request->title,
+            'description' => $request->description,
             'content' => $msg,
             'user_id' => Auth::id(),
             'category_id' => $category->id,
