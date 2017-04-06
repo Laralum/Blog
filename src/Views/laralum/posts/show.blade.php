@@ -1,19 +1,4 @@
 @extends('laralum::layouts.master')
-@php
-    $settings = \Laralum\Blog\Models\Settings::first();
-@endphp
-@section('css')
-    @if ($settings->text_editor == 'wysiwyg')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.5/tinymce.min.js"></script>
-        <script>
-            tinymce.init({ selector:'textarea',   plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste code'
-            ] });
-        </script>
-    @endif
-@endsection
 @section('icon', 'ion-eye')
 @section('title', __('laralum_blog::general.view_post'))
 @section('subtitle', __('laralum_blog::general.view_post_desc', ['id' => $post->id]))
@@ -41,7 +26,7 @@
                 <br>
                 <div class="uk-grid-small uk-child-width-1-1" uk-grid>
                     <span>
-                        <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                        <a class="uk-button uk-button-text" href="#comments" uk-scroll>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
                         <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.destroy.confirm', ['category' => $post->category->id, 'post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete_post')</a>
                         <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.edit', ['category' => $post->category->id, 'post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit_post')</a>
                     </span>
@@ -76,9 +61,9 @@
                                     <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.categories.posts.comments.destroy.confirm',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
                                 @endcan
                                 @can('update', $comment)
-                                    <a class="uk-button uk-button-text uk-align-right edit-comment-button" href="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</a>
+                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
                                 @endcan
-                                <p class="comment">{!! $comment->comment !!}</p>
+                                <p class="comment">{{ $comment->comment }}</p>
                             </div>
                         </article>
                         <br>
@@ -101,17 +86,7 @@
                             {{ csrf_field() }}
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
-                                    <br>
-                                    @if ($settings->text_editor == 'wysiwyg')
-                                        <textarea name="comment">{{ old('comment') }}</textarea>
-                                    @else
-                                        <textarea name="comment" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.content') }}">{{ old('comment') }}</textarea>
-                                        @if ($settings->text_editor == 'markdown')
-                                            <i>@lang('laralum_blog::general.markdown')</i>
-                                        @else
-                                            <i>@lang('laralum_blog::general.plain_text')</i>
-                                        @endif
-                                    @endif
+                                    <textarea name="comment" class="uk-textarea" rows="8" placeholder="{{ __('laralum_blog::general.add_a_comment') }}">{{ old('comment') }}</textarea>
                                 </div>
                                 <div class="uk-margin">
                                     <button type="submit" class="uk-button uk-button-primary">
@@ -125,6 +100,37 @@
                 @endcan
             </div>
         </div>
+        <form class="uk-form-stacked uk-hidden" id="edit-comment-form" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('PATCH') }}
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <textarea name="comment" class="uk-textarea" id="comment-textarea" rows="8" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
+                </div>
+                <div class="uk-margin">
+                    <button type="submit" class="uk-button uk-button-primary">
+                        <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.submit')
+                    </button>
+                </div>
+            </fieldset>
+        </form>
     @endcan
 </div>
+@endsection
+@section('js')
+    <script>
+        $(function() {
+            $('.edit-comment-button').click(function() {
+                $('.edit-comment-button').prop('disabled', false);
+                $(this).attr('disabled', 'disabled');
+                var url = $(this).data('url');
+                var comment = $(this).data('comment');
+                $('#comment-textarea').html(comment);
+                var form = $('#edit-comment-form').html();
+                $('.edit-comment-form').hide();
+                $('.comment').removeClass("uk-hidden"); {{-- Show all comments --}}
+                $(this).next().html('<form class="uk-form-stacked edit-comment-form uk-animation-scale-up" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form><p class="comment uk-hidden">'+comment+'</p>');
+            });
+        });
+    </script>
 @endsection

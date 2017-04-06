@@ -26,9 +26,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">@lang('laralum_blog::general.content')</label>
                                 @if ($settings->text_editor == 'wysiwyg')
-                                    <textarea name="content">
-                                        {{ old('content', isset($post) ? $post->content : '') }}
-                                    </textarea>
+                                    <textarea name="content" rows="15">{{ old('content', isset($post) ? $post->content : '') }}</textarea>
                                 @else
                                     @php
                                     $text = old('content', isset($post) ? $post->content : '');
@@ -37,9 +35,7 @@
                                         $text = $converter->convert($text);
                                     }
                                     @endphp
-                                    <textarea name="content" class="uk-textarea" rows="5" placeholder="{{ __('laralum_blog::general.content') }}">
-                                        {{ $text }}
-                                    </textarea>
+                                    <textarea name="content" class="uk-textarea" rows="15" placeholder="{{ __('laralum_blog::general.content') }}">{{ $text }}</textarea>
                                     @if ($settings->text_editor == 'markdown')
                                         <i>@lang('laralum_blog::general.markdown')</i>
                                     @else

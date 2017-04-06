@@ -15,7 +15,7 @@
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->name }}</td>
                 <td>
-                        <a href="{{ route('laralum_public::blog.categories.show', ['id' => $category->id]) }}">
+                        <a href="{{ route('laralum_public::blog.categories.show', ['category' => $category->id]) }}">
                             @lang('laralum_blog::general.view')
                         </a>
                 </td>

@@ -71,12 +71,22 @@ return [
     'comment_updated'   => 'Comment #:id updated!',
     'comment_deleted'   => 'Comment #:id deleted!',
     'no_comments_yet'   => 'No Comments yet',
-    'write_a_comment'   => 'Write a comment!',
-    'edit_a_comment'    => 'Edit this comment!',
-    'comment_sent'      => 'Comment sent!',
+    'add_a_comment'     => 'Add a public comment...',
+    'edit_a_comment'    => 'Edit this comment...',
+    'comment_added'     => 'Comment added!',
 
 
     'sure_del_category' => 'Are you sure you want to delete category ":category" ?',
     'sure_del_post'     => 'Are you sure you want to delete post ":post" ?',
     'sure_del_comment'  => 'Are you sure you want to delete comment ":comment" ?',
+
+    'public_url'            => 'Public URL',
+    'select_editor'         => 'Please select a text editor',
+    'text_editor'           => 'Text Editor',
+    'plain_text'            => 'Plain text',
+    'markdown'              => 'Markdown',
+    'wysiwyg'               => 'WYSIWYG',
+    'text_editor_desc'      => 'Select a text editor for messages',
+    'save_settings'         => 'Update Blog settings',
+    'blog_settings_updated' => 'Blog settings updated',
 ];

@@ -5,7 +5,6 @@ namespace Laralum\Blog\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laralum\Blog\Models\Settings;
-use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
