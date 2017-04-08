@@ -63,7 +63,7 @@ return [
     'edit_post_desc'    => "You're editing post #:id created :time_ago",
 
 
-    'written_by'        => 'Written by :username :time_ago. Posted in  category :cat.',
+    'written_by'        => 'Written by :username :time_ago. Posted in :cat category.',
     'comments_choice'   => ':num comment|:num comments',
     'comments'          => 'Comments',
     'edit_comment'      => 'Edit Comment',

@@ -46,8 +46,9 @@ class CategoryController extends Controller
         $this->authorize('create', Category::class);
 
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'name' => 'required|unique:laralum_shop_categories,name|max:255',
         ]);
+
         Category::create($request->all());
         return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.category_added'));
     }

@@ -15,18 +15,18 @@ Route::group([
     ], function () use ($public_url) {
         Route::get('/', 'PublicCategoryController@index')->name('categories.index');
         Route::get('/categories/{category}', 'PublicCategoryController@show')->name('categories.show');
-        Route::get('/categories/{category}/posts/{post}', 'PublicPostController@show')->name('categories.posts.show');
+        Route::get('/posts/{post}', 'PublicPostController@show')->name('posts.show');
 
         Route::group([
                 'middleware' => [
                     'auth', 'can:publicAccess,Laralum\Blog\Models\Comment',
                 ],
             ], function () use ($public_url) {
-                Route::resource('categories.posts.comments', 'PublicCommentController', [
+                Route::resource('comments', 'PublicCommentController', [
                     'names' => [
-                        'store'   => 'categories.posts.comments.store',
-                        'update'  => 'categories.posts.comments.update',
-                        'destroy' => 'categories.posts.comments.destroy',
+                        'store'   => 'comments.store',
+                        'update'  => 'comments.update',
+                        'destroy' => 'comments.destroy',
                     ],
                     'only' => [
                         'store', 'update', 'destroy'
@@ -53,15 +53,15 @@ Route::group([
                     'can:access,Laralum\Blog\Models\Post',
                 ],
             ], function () {
-                Route::get('categories/{category}/posts/{post}/delete', 'PostController@confirmDestroy')->name('categories.posts.destroy.confirm');
-                Route::resource('categories.posts', 'PostController', ['except' => ['index']]);
+                Route::get('posts/{post}/delete', 'PostController@confirmDestroy')->name('posts.destroy.confirm');
+                Route::resource('posts', 'PostController', ['except' => ['index']]);
                 Route::group([
                         'middleware' => [
                             'can:access,Laralum\Blog\Models\Comment',
                         ],
                     ], function () {
-                        Route::get('categories/{category}/posts/{post}/comment/{comment}/delete', 'CommentController@confirmDestroy')->name('categories.posts.comments.destroy.confirm');
-                        Route::resource('categories.posts.comments', 'CommentController', ['only' => ['store', 'update', 'destroy']]);
+                        Route::get('comments/{comment}/delete', 'CommentController@confirmDestroy')->name('comments.destroy.confirm');
+                        Route::resource('comments', 'CommentController', ['only' => ['store', 'update', 'destroy']]);
                 });
         });
 });

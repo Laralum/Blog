@@ -16,26 +16,25 @@ class PublicCommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Category $category
-     * @param  \Laralum\Blog\Models\Post $post
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Category $category, Post $post)
+    public function store(Request $request)
     {
         $this->authorize('publicCreate', Comment::class);
 
         $this->validate($request, [
             'comment' => 'required|max:500',
+            'post' => 'required|exists:laralum_blog_posts,id',
         ]);
 
         Comment::create([
             'user_id' => Auth::id(),
-            'post_id' => $post->id,
+            'post_id' => $request->post,
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('laralum_public::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])
+        return redirect()->route('laralum_public::blog.posts.show', ['post' => $request->post])
             ->with('success', __('laralum_blog::general.comment_added'));
     }
 
@@ -43,13 +42,11 @@ class PublicCommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Category $category
-     * @param  \Laralum\Blog\Models\Post $post
      * @param  \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category, Post $post, Comment $comment)
+    public function update(Request $request, Comment $comment)
     {
         $this->authorize('publicUpdate', $comment);
 
@@ -61,25 +58,23 @@ class PublicCommentController extends Controller
             'comment' => $request->comment
         ]);
 
-        return redirect()->route('laralum_public::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])
+        return redirect()->route('laralum_public::blog.posts.show', ['post' => $comment->post->id])
             ->with('success', __('laralum_blog::general.comment_updated', ['id' => $comment->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Laralum\Blog\Models\Category $category
-     * @param  \Laralum\Blog\Models\Post $post
      * @param  \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, Post $post, Comment $comment)
+    public function destroy(Comment $comment)
     {
         $this->authorize('publicDelete', $comment);
 
         $comment->delete();
-        return redirect()->route('laralum_public::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id])
+        return redirect()->route('laralum_public::blog.posts.show', ['post' => $comment->post->id])
             ->with('success', __('laralum_blog::general.comment_deleted', ['id' => $comment->id]));
     }
 }

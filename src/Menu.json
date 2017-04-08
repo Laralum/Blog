@@ -7,6 +7,10 @@
         {
             "trans": "laralum_blog::general.create_category",
             "route": "laralum::blog.categories.create"
+        },
+        {
+            "trans": "laralum_blog::general.create_post",
+            "route": "laralum::blog.posts.create"
         }
     ]
 }

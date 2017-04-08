@@ -1,9 +1,9 @@
 <?php
 
+use Laralum\Blog\Models\Settings;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Laralum\Blog\Models\Settings;
 
 class CreateLaralumBlogSettings extends Migration
 {

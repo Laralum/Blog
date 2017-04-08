@@ -18,7 +18,7 @@ class CategoryPolicy
      */
     public function before($user, $ability)
     {
-        if (User::findOrFail($user->id)->superAdmin()) {
+        if ($ability != 'delete' && User::findOrFail($user->id)->superAdmin()) {
             return true;
         }
     }
@@ -80,9 +80,12 @@ class CategoryPolicy
      */
     public function delete($user, Category $category)
     {
-        if ($category->user->id == $user->id) {
-            return true;
+        if (Category::first()->id == $category->id) {
+            return false;
         }
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.delete');
+
+        $user = User::findOrFail($user->id);
+
+        return ($user->superAdmin() || $user->hasPermission('laralum::blog.categories.delete'));
     }
 }

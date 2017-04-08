@@ -19,10 +19,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Category $category)
+    public function create()
     {
         $this->authorize('create', Post::class);
-        return view('laralum_blog::laralum.posts.create', ['category' => $category]);
+        return view('laralum_blog::laralum.posts.create', ['categories' => Category::all()]);
     }
 
     /**
@@ -31,12 +31,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Category $category)
+    public function store(Request $request)
     {
         $this->authorize('create', Post::class);
         $this->validate($request, [
             'title' => 'required|max:255',
             'description' => 'required|max:255',
+            'category' => 'required|exists:laralum_blog_categories,id',
             'content' => 'required|max:2000',
         ]);
 
@@ -53,18 +54,18 @@ class PostController extends Controller
             'description' => $request->description,
             'content' => $msg,
             'user_id' => Auth::id(),
-            'category_id' => $category->id,
+            'category_id' => $request->category,
         ]);
-        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::general.category_created'));
+        return redirect()->route('laralum::blog.categories.show', ['category' => $request->category])->with('success', __('laralum_blog::general.category_created'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category, Post $post)
+    public function show(Post $post)
     {
         $this->authorize('view', $post);
         return view('laralum_blog::.laralum.posts.show', ['post' => $post]);
@@ -73,28 +74,29 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, Post $post)
+    public function edit(Post $post)
     {
         $this->authorize('update', $post);
-        return view('laralum_blog::.laralum.posts.edit', ['post' => $post]);
+        return view('laralum_blog::.laralum.posts.edit', ['post' => $post, 'categories' => Category::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Laralum\Blog\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category, Post $post)
+    public function update(Request $request, Post $post)
     {
         $this->authorize('update', $post);
         $this->validate($request, [
             'title' => 'required|min:5|max:60',
             'content' => 'required|max:1500',
+            'category' => 'required|exists:laralum_blog_categories,id',
         ]);
 
         if (Settings::first()->text_editor == "markdown") {
@@ -107,10 +109,11 @@ class PostController extends Controller
 
         $post->update([
             'title' => $request->title,
+            'category_id' => $request->category,
             'content' => $msg,
         ]);
 
-        return redirect()->route('laralum::blog.categories.posts.show', ['category' => $category, 'post' => $post])->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));
+        return redirect()->route('laralum::blog.posts.show', ['post' => $post])->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));
     }
 
     /**
@@ -118,13 +121,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function confirmDestroy(Request $request, Category $category, Post $post)
+    public function confirmDestroy(Request $request, Post $post)
     {
         $this->authorize('delete', $post);
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_post', ['post' => $post->title]),
-            'action' => route('laralum::blog.categories.posts.destroy', ['category' => $category->id, 'post' => $post->id]),
+            'action' => route('laralum::blog.posts.destroy', ['post' => $post->id]),
         ]);
 
     }
@@ -136,11 +139,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, Post $post)
+    public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
         $post->deleteComments();
         $post->delete();
-        return redirect()->route('laralum::blog.categories.show', ['category' => $category->id])->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));
     }
 }

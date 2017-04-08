@@ -48,14 +48,14 @@
                             </header>
                             <div class="uk-comment-body">
                                 @can('delete', $comment)
-                                    <form action="{{ route('laralum_public::blog.categories.posts.comments.destroy',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}" method="post">
+                                    <form action="{{ route('laralum_public::blog.comments.destroy',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <button type="submit" name="button">@lang('laralum_blog::general.delete')</button>
                                     </form>
                                 @endcan
                                 @can('update', $comment)
-                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum_public::blog.categories.posts.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}">@lang('laralum_blog::general.edit')</button>
+                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum_public::blog.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}">@lang('laralum_blog::general.edit')</button>
                                 @endcan
                                 <p class="comment">{{ $comment->comment }}</p>
                             </div>
@@ -67,10 +67,10 @@
                             <img src="{{ \Laralum\Users\Models\User::findOrFail(Auth::id())->avatar() }}" width="80" height="80" alt="">
                             <h4><span>{{ \Laralum\Users\Models\User::findOrFail(Auth::id())->name }}</span></h4>
                     <div>
-                        <form method="POST" action="{{ route('laralum::blog.categories.posts.comments.store',['category' => $post->category->id, 'post' => $post->id]) }}">
+                        <form method="POST" action="{{ route('laralum_public::blog.comments.store', ['post' => $post->id]) }}">
                             {{ csrf_field() }}
-                                    <textarea name="comment" class="uk-textarea" rows="8" placeholder="{{ __('laralum_blog::general.add_a_comment') }}">{{ old('comment') }}</textarea>
-                                    <button type="submit">@lang('laralum_blog::general.submit')</button>
+                            <textarea name="comment" class="uk-textarea" rows="8" placeholder="{{ __('laralum_blog::general.add_a_comment') }}">{{ old('comment') }}</textarea>
+                            <button type="submit">@lang('laralum_blog::general.submit')</button>
                         </form>
                     </div>
                 @endcan

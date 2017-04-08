@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Laralum\Blog\Models\Category;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateLaralumBlogCategoriesTable extends Migration {
 
@@ -12,6 +14,10 @@ class CreateLaralumBlogCategoriesTable extends Migration {
 			$table->string('name');
 			$table->timestamps();
 		});
+
+		Category::create([
+			'name' => 'Uncategorized',
+		]);
 	}
 
 	public function down()

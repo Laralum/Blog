@@ -11,8 +11,6 @@
 @endsection
 @section('content')
 <div class="uk-container uk-container-large">
-    <center><a @cannot('create', \laralum\Blog\Models\Post::class) disabled @endcannot href="{{ route('laralum::blog.categories.posts.create', ['category' => $category->id]) }}" class="uk-button uk-button-primary uk-width-1-3 uk-margin-small-bottom">@lang('laralum_blog::general.create_post')</a></center>
-    <br>
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
         @if ($category->posts->count())
             @foreach ($category->posts as $post)
@@ -30,7 +28,7 @@
                             <p>{{ $post->description }}</p>
                         </div>
                         <div class="uk-card-footer">
-                            <a href="{{ route('laralum::blog.categories.posts.show', ['category' => $category->id, 'post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
+                            <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
                             <span class="uk-align-right">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
                         </div>
                     </div>
