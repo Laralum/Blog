@@ -56,7 +56,8 @@ class PostController extends Controller
             'user_id' => Auth::id(),
             'category_id' => $request->category,
         ]);
-        return redirect()->route('laralum::blog.categories.show', ['category' => $request->category])->with('success', __('laralum_blog::general.category_created'));
+        return redirect()->route('laralum::blog.categories.show', ['category' => $request->category])
+            ->with('success', __('laralum_blog::general.category_added'));
     }
 
     /**
@@ -94,8 +95,8 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
         $this->validate($request, [
-            'title' => 'required|min:5|max:60',
-            'content' => 'required|max:1500',
+            'title' => 'required|max:255',
+            'content' => 'required|max:2000',
             'category' => 'required|exists:laralum_blog_categories,id',
         ]);
 
@@ -113,7 +114,8 @@ class PostController extends Controller
             'content' => $msg,
         ]);
 
-        return redirect()->route('laralum::blog.posts.show', ['post' => $post])->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));
+        return redirect()->route('laralum::blog.posts.show', ['post' => $post])
+            ->with('success', __('laralum_blog::general.post_updated', ['id' => $post->id]));
     }
 
     /**
@@ -144,6 +146,7 @@ class PostController extends Controller
         $this->authorize('delete', $post);
         $post->deleteComments();
         $post->delete();
-        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));
+        return redirect()->route('laralum::blog.categories.index')
+            ->with('success', __('laralum_blog::general.post_deleted',['id' => $post->id]));
     }
 }

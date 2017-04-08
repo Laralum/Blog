@@ -31,7 +31,8 @@ return [
     'category_id'       => 'Category #:id',
     'category_desc'     => "You're viewing posts of category #:id",
     'category_added'    => "Category Added!",
-    'category_updated'  => "Category #:id Updated!",
+    'category_updated'  => "Category #:id updated!",
+    'category_deleted'  => "Category #:id deleted!",
 
 
     'edit_category'   => 'Edit Category',

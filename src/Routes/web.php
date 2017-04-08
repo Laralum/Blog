@@ -22,16 +22,9 @@ Route::group([
                     'auth', 'can:publicAccess,Laralum\Blog\Models\Comment',
                 ],
             ], function () use ($public_url) {
-                Route::resource('comments', 'PublicCommentController', [
-                    'names' => [
-                        'store'   => 'comments.store',
-                        'update'  => 'comments.update',
-                        'destroy' => 'comments.destroy',
-                    ],
-                    'only' => [
-                        'store', 'update', 'destroy'
-                    ],
-                ]);
+                Route::post('/post/{post}/comments' ,'PublicCommentController@store')->name('comments.store');
+                Route::patch('comments/{comment}' ,'PublicCommentController@update')->name('comments.update');
+                Route::delete('comments/{comment}' ,'PublicCommentController@destroy')->name('comments.destroy');
         });
 
 });
@@ -60,8 +53,10 @@ Route::group([
                             'can:access,Laralum\Blog\Models\Comment',
                         ],
                     ], function () {
-                        Route::get('comments/{comment}/delete', 'CommentController@confirmDestroy')->name('comments.destroy.confirm');
-                        Route::resource('comments', 'CommentController', ['only' => ['store', 'update', 'destroy']]);
+                        Route::post('/post/{post}/comments' ,'CommentController@store')->name('comments.store');
+                        Route::patch('comments/{comment}' ,'CommentController@update')->name('comments.update');
+                        Route::get('comments/{comment}/destroy', 'CommentController@confirmDestroy')->name('comments.destroy.confirm');
+                        Route::delete('comments/{comment}' ,'CommentController@destroy')->name('comments.destroy');
                 });
         });
 });

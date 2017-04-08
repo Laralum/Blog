@@ -26,8 +26,12 @@
                 <div class="uk-grid-small uk-child-width-1-1" uk-grid>
                     <span>
                         <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
-                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete_post')</a>
-                        <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit_post')</a>
+                        @can('delete', $post)
+                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete_post')</a>
+                        @endcan
+                        @can('edit', $post)
+                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit_post')</a>
+                        @endcan
                     </span>
                 </div>
 
@@ -81,7 +85,7 @@
 
                     <div class="uk-comment-body">
 
-                        <form class="uk-form-stacked" method="POST" action="{{ route('laralum::blog.comments.store',['category' => $post->category->id, 'post' => $post->id]) }}">
+                        <form class="uk-form-stacked" method="POST" action="{{ route('laralum::blog.comments.store',['post' => $post->id]) }}">
                             {{ csrf_field() }}
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">

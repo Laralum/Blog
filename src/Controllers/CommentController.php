@@ -4,7 +4,6 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Comment;
 use Illuminate\Support\Facades\Auth;
@@ -16,25 +15,25 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Laralum\Blog\Models\Post  $post
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
         $this->authorize('create', Comment::class);
 
         $this->validate($request, [
             'comment' => 'required|max:500',
-            'post' => 'required|exists:laralum_blog_posts,id',
         ]);
 
         Comment::create([
             'user_id' => Auth::id(),
-            'post_id' => $request->post,
+            'post_id' => $post->id,
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('laralum::blog.posts.show', ['post' => $request->post])
+        return redirect()->route('laralum::blog.posts.show', ['post' => $post->id])
             ->with('success', __('laralum_blog::general.comment_added'));
     }
 

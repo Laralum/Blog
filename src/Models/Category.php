@@ -3,6 +3,7 @@
 namespace Laralum\Blog\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Comment;
 
