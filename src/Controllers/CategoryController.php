@@ -49,7 +49,7 @@ class CategoryController extends Controller
             'name' => 'required|max:255',
         ]);
         Category::create($request->all());
-        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_added'));
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.category_added'));
     }
 
     /**
@@ -93,7 +93,7 @@ class CategoryController extends Controller
             'name' => 'required|max:255',
         ]);
         $category->update($request->all());
-        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::category_updated',['id' => $category->id]));
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.category_updated',['id' => $category->id]));
     }
 
     /**
@@ -127,6 +127,6 @@ class CategoryController extends Controller
         $category->deletePosts();
         $category->delete();
 
-        return redirect()->route('laralum::blog.categories.index');
+        return redirect()->route('laralum::blog.categories.index')->with('success', __('laralum_blog::general.category_deleted'));
     }
 }
