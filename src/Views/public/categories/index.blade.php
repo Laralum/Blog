@@ -4,7 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>__('laralum_blog::general.category_list') - {{ Laralum\Settings\Models\Settings::first()->appname }}</title>
+        <title>@lang('laralum_blog::general.category_list') - {{ Laralum\Settings\Models\Settings::first()->appname }}</title>
     </head>
     <body>
         <h1>@lang('laralum_blog::general.category_list')</h1>
