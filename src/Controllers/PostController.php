@@ -96,8 +96,9 @@ class PostController extends Controller
         $this->authorize('update', $post);
         $this->validate($request, [
             'title' => 'required|max:255',
-            'content' => 'required|max:2000',
             'category' => 'required|exists:laralum_blog_categories,id',
+            'description' => 'required|max:255',
+            'content' => 'required|max:2000',
         ]);
 
         if (Settings::first()->text_editor == "markdown") {
@@ -111,6 +112,7 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'category_id' => $request->category,
+            'description' => $request->description,
             'content' => $msg,
         ]);
 

@@ -53,7 +53,7 @@
             </span>
         </div>
         <br><br><br>
-        @can('access', \Laralum\Blog\Models\Comment::class)
+        @can('publicAccess', \Laralum\Blog\Models\Comment::class)
             <div id="comments">
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
@@ -73,14 +73,14 @@
                                     </div>
                                 </header>
                                 <div class="uk-comment-body">
-                                    @can('delete', $comment)
+                                    @can('publicDelete', $comment)
                                         <form action="{{ route('laralum_public::blog.comments.destroy',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <button type="submit" name="button">@lang('laralum_blog::general.delete')</button>
                                         </form>
                                     @endcan
-                                    @can('update', $comment)
+                                    @can('publicUpdate', $comment)
                                         <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum_public::blog.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}">@lang('laralum_blog::general.edit')</button>
                                     @endcan
                                     <p class="comment">{{ $comment->comment }}</p>
@@ -89,7 +89,7 @@
                             <br>
                         @endcan
                     @endforeach
-                    @can('create', \Laralum\Blog\Models\Comment::class)
+                    @can('publicCreate', \Laralum\Blog\Models\Comment::class)
                                 <img src="{{ \Laralum\Users\Models\User::findOrFail(Auth::id())->avatar() }}" width="80" height="80" alt="">
                                 <h4><span>{{ \Laralum\Users\Models\User::findOrFail(Auth::id())->name }}</span></h4>
                         <div>
