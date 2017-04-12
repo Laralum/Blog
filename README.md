@@ -3,8 +3,8 @@
 <p align="center"><a href="https://laralum.com"><img height="250" src="https://avatars1.githubusercontent.com/u/22253051"></a></p>
 
 <p align="center">
-<a href="https://styleci.io/repos/83248616"><img src="https://styleci.io/repos/83248616/shield?style=flat?branch=master" alt="StyleCI"></a>
-<a href="https://github.com/laralum/blog"><img src="https://img.shields.io/packagecontrol/dt/GitGutter.svg" alt="Downloads"></a>
+<a href="https://styleci.io/repos/83248616"><img src="https://styleci.io/repos/83248616/shield?style=flat&branch=master" alt="StyleCI"></a>
+<a href="https://github.com/laralum/blog"><img src="https://poser.pugx.org/laralum/blog/d/total.svg" alt="Downloads"></a>
 <a href="https://github.com/laralum"><img src="https://img.shields.io/badge/Built%20For-Laralum-orange.svg" alt="Laralum"></a>
 </p>
 
@@ -22,7 +22,6 @@ This module is the complete implementation of a manageable blog from Laralum das
 
 ## License
 
-[
 ```
 MIT License
 
@@ -46,4 +45,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-](https://raw.githubusercontent.com/Laralum/Blog/master/LICENSE)
