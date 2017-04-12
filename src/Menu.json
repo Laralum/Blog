@@ -1,14 +1,17 @@
 {
     "items": [
         {
+            "permission" : "laralum::blog.categories.access",
             "trans": "laralum_blog::general.category_list",
             "route": "laralum::blog.categories.index"
         },
         {
+            "permission" : "laralum::blog.categories.create",
             "trans": "laralum_blog::general.create_category",
             "route": "laralum::blog.categories.create"
         },
         {
+            "permission" : "laralum::blog.posts.create",
             "trans": "laralum_blog::general.create_post",
             "route": "laralum::blog.posts.create"
         }
