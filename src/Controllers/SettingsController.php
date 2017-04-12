@@ -11,8 +11,9 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -21,12 +22,12 @@ class SettingsController extends Controller
 
         $this->validate($request, [
             'text_editor' => 'required|in:plain-text,markdown,wysiwyg',
-            'public_url' => 'required|max:255',
+            'public_url'  => 'required|max:255',
         ]);
 
         Settings::first()->update([
             'text_editor' => $request->input('text_editor'),
-            'public_url' => $request->input('public_url'),
+            'public_url'  => $request->input('public_url'),
         ]);
 
         return redirect()->route('laralum::settings.index', ['p' => 'Blog'])->with('success', __('laralum_blog::general.blog_settings_updated'));

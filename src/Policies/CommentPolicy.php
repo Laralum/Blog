@@ -2,9 +2,9 @@
 
 namespace Laralum\Blog\Policies;
 
-use Laralum\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Laralum\Blog\Models\Comment;
+use Laralum\Users\Models\User;
 
 class CommentPolicy
 {
@@ -26,7 +26,8 @@ class CommentPolicy
     /**
      * Determine if the current user can access comments.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function access($user)
@@ -35,9 +36,10 @@ class CommentPolicy
     }
 
     /**
-     * Determine if the current user can access comments. (public)
+     * Determine if the current user can access comments. (public).
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function publicAccess($user)
@@ -45,12 +47,11 @@ class CommentPolicy
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.access-public');
     }
 
-
-
     /**
      * Determine if the current user can create comments.
      *
-     * @param  mixed  $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function create($user)
@@ -59,9 +60,10 @@ class CommentPolicy
     }
 
     /**
-     * Determine if the current user can create comments. (public)
+     * Determine if the current user can create comments. (public).
      *
-     * @param  mixed  $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function publicCreate($user)
@@ -72,8 +74,9 @@ class CommentPolicy
     /**
      * Determine if the current user can view comments.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function view($user, Comment $comment)
@@ -81,14 +84,16 @@ class CommentPolicy
         if ($comment->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.view');
     }
 
     /**
-     * Determine if the current user can view comments. (public)
+     * Determine if the current user can view comments. (public).
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function publicView($user, Comment $comment)
@@ -96,15 +101,16 @@ class CommentPolicy
         if ($comment->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.view-public');
     }
-
 
     /**
      * Determine if the current user can update comments.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function update($user, Comment $comment)
@@ -112,14 +118,16 @@ class CommentPolicy
         if ($comment->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.update');
     }
 
     /**
-     * Determine if the current user can update comments. (public)
+     * Determine if the current user can update comments. (public).
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function publicUpdate($user, Comment $comment)
@@ -127,14 +135,16 @@ class CommentPolicy
         if ($comment->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.update-public');
     }
 
     /**
      * Determine if the current user can delete comments.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function delete($user, Comment $comment)
@@ -143,14 +153,16 @@ class CommentPolicy
         if ($comment->user->id == $user->id || $user->hasPermission('laralum::blog.posts.delete')) {
             return true;
         }
+
         return $user->hasPermission('laralum::blog.comments.delete');
     }
 
     /**
-     * Determine if the current user can delete comments. (public)
+     * Determine if the current user can delete comments. (public).
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param mixed                        $user
+     * @param \Laralum\Blog\Models\Comment $comment
+     *
      * @return bool
      */
     public function publicDelete($user, Comment $comment)
@@ -159,6 +171,7 @@ class CommentPolicy
         if ($comment->user->id == $user->id || $user->hasPermission('laralum::blog.posts.delete')) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.delete-public');
     }
 }

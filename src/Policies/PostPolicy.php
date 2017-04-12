@@ -2,9 +2,9 @@
 
 namespace Laralum\Blog\Policies;
 
-use Laralum\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Laralum\Blog\Models\Post;
+use Laralum\Users\Models\User;
 
 class PostPolicy
 {
@@ -26,7 +26,8 @@ class PostPolicy
     /**
      * Determine if the current user can access posts.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function access($user)
@@ -34,11 +35,11 @@ class PostPolicy
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.access');
     }
 
-
     /**
      * Determine if the current user can create posts.
      *
-     * @param  mixed  $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function create($user)
@@ -46,12 +47,12 @@ class PostPolicy
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.create');
     }
 
-
     /**
      * Determine if the current user can view posts.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Post $post
+     * @param mixed                     $user
+     * @param \Laralum\Blog\Models\Post $post
+     *
      * @return bool
      */
     public function view($user, Post $post)
@@ -59,15 +60,16 @@ class PostPolicy
         if ($post->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.view');
     }
-
 
     /**
      * Determine if the current user can update posts.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Post $post
+     * @param mixed                     $user
+     * @param \Laralum\Blog\Models\Post $post
+     *
      * @return bool
      */
     public function update($user, Post $post)
@@ -75,15 +77,16 @@ class PostPolicy
         if ($post->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.update');
     }
-
 
     /**
      * Determine if the current user can delete posts.
      *
-     * @param  mixed $user
-     * @param  \Laralum\Blog\Models\Post $post
+     * @param mixed                     $user
+     * @param \Laralum\Blog\Models\Post $post
+     *
      * @return bool
      */
     public function delete($user, Post $post)
@@ -91,6 +94,7 @@ class PostPolicy
         if ($post->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.delete');
     }
 }
