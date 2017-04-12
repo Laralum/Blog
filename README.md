@@ -1,6 +1,7 @@
-# Blog
 
-<p align="center"><a href="https://laralum.com"><img height="250" src="https://avatars1.githubusercontent.com/u/22253051"></a></p>
+<p align="center"><a href="https://laralum.com"><img height="150" src="https://avatars1.githubusercontent.com/u/22253051"></a></p>
+
+<h1 align="center">Blog</h1>
 
 <p align="center">
 <a href="https://styleci.io/repos/83248616"><img src="https://styleci.io/repos/83248616/shield?style=flat&branch=master" alt="StyleCI"></a>
@@ -11,6 +12,8 @@
 ## Description
 
 This module is the complete implementation of a manageable blog from Laralum dashboard.
+
+It includes categories, posts & comments implementation, and the acces to these features is managed by sundry permissions.
 
 *Includes sample public views*
 
