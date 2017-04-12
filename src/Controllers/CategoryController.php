@@ -5,8 +5,6 @@ namespace Laralum\Blog\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laralum\Blog\Models\Category;
-use Laralum\Blog\Models\Post;
-use Laralum\Blog\Models\Comment;
 
 class CategoryController extends Controller
 {
@@ -20,6 +18,7 @@ class CategoryController extends Controller
         $this->authorize('view', Category::class);
 
         $categories = Category::all();
+
         return view('laralum_blog::laralum.categories.index', ['categories' => $categories]);
     }
 
@@ -38,7 +37,8 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,6 +50,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create($request->all());
+
         return redirect()->route('laralum::blog.categories.index')
             ->with('success', __('laralum_blog::general.category_added'));
     }
@@ -57,7 +58,8 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Laralum\Blog\Models\Category $category
+     * @param \Laralum\Blog\Models\Category $category
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
@@ -70,7 +72,8 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Laralum\Blog\Models\Category $category
+     * @param \Laralum\Blog\Models\Category $category
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -83,8 +86,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Category $category
+     * @param \Illuminate\Http\Request      $request
+     * @param \Laralum\Blog\Models\Category $category
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
@@ -95,14 +99,16 @@ class CategoryController extends Controller
             'name' => 'required|max:255',
         ]);
         $category->update($request->all());
+
         return redirect()->route('laralum::blog.categories.index')
-            ->with('success', __('laralum_blog::general.category_updated',['id' => $category->id]));
+            ->with('success', __('laralum_blog::general.category_updated', ['id' => $category->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Laralum\Blog\Models\Category $category
+     * @param \Laralum\Blog\Models\Category $category
+     *
      * @return \Illuminate\Http\Response
      */
     public function confirmDestroy(Category $category)
@@ -110,23 +116,24 @@ class CategoryController extends Controller
         $this->authorize('delete', $category);
 
         return view('laralum::pages.confirmation', [
-            'method' => 'DELETE',
+            'method'  => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_category', ['category' => $category->name]),
-            'action' => route('laralum::blog.categories.destroy', ['category' => $category->id]),
+            'action'  => route('laralum::blog.categories.destroy', ['category' => $category->id]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Laralum\Blog\Models\Category $category
+     * @param \Laralum\Blog\Models\Category $category
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
     {
         $this->authorize('delete', $category);
 
-        $category->posts->each(function($post) {
+        $category->posts->each(function ($post) {
             $post->update(['category_id' => Category::first()->id]);
         });
 

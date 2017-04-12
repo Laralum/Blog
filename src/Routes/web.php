@@ -10,8 +10,8 @@ Route::group([
             'web', 'laralum.base',
         ],
         'namespace' => 'Laralum\Blog\Controllers',
-        'prefix' => $public_url,
-        'as' => 'laralum_public::blog.'
+        'prefix'    => $public_url,
+        'as'        => 'laralum_public::blog.',
     ], function () use ($public_url) {
         Route::get('/', 'PublicCategoryController@index')->name('categories.index');
         Route::get('/categories/{category}', 'PublicCategoryController@show')->name('categories.show');
@@ -22,22 +22,20 @@ Route::group([
                     'auth', 'can:publicAccess,Laralum\Blog\Models\Comment',
                 ],
             ], function () use ($public_url) {
-                Route::post('/post/{post}/comments' ,'PublicCommentController@store')->name('comments.store');
-                Route::patch('comments/{comment}' ,'PublicCommentController@update')->name('comments.update');
-                Route::delete('comments/{comment}' ,'PublicCommentController@destroy')->name('comments.destroy');
-        });
-
-});
-
+                Route::post('/post/{post}/comments', 'PublicCommentController@store')->name('comments.store');
+                Route::patch('comments/{comment}', 'PublicCommentController@update')->name('comments.update');
+                Route::delete('comments/{comment}', 'PublicCommentController@destroy')->name('comments.destroy');
+            });
+    });
 
 Route::group([
         'middleware' => [
             'web', 'laralum.base', 'laralum.auth',
             'can:access,Laralum\Blog\Models\Category',
         ],
-        'prefix' => config('laralum.settings.base_url').'/blog',
+        'prefix'    => config('laralum.settings.base_url').'/blog',
         'namespace' => 'Laralum\Blog\Controllers',
-        'as' => 'laralum::blog.'
+        'as'        => 'laralum::blog.',
     ], function () {
         Route::get('categories/{category}/delete', 'CategoryController@confirmDestroy')->name('categories.destroy.confirm');
         Route::resource('categories', 'CategoryController');
@@ -53,22 +51,22 @@ Route::group([
                             'can:access,Laralum\Blog\Models\Comment',
                         ],
                     ], function () {
-                        Route::post('/post/{post}/comments' ,'CommentController@store')->name('comments.store');
-                        Route::patch('comments/{comment}' ,'CommentController@update')->name('comments.update');
+                        Route::post('/post/{post}/comments', 'CommentController@store')->name('comments.store');
+                        Route::patch('comments/{comment}', 'CommentController@update')->name('comments.update');
                         Route::get('comments/{comment}/destroy', 'CommentController@confirmDestroy')->name('comments.destroy.confirm');
-                        Route::delete('comments/{comment}' ,'CommentController@destroy')->name('comments.destroy');
-                });
-        });
-});
+                        Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy');
+                    });
+            });
+    });
 
 Route::group([
         'middleware' => [
             'web', 'laralum.base', 'laralum.auth',
             'can:access,Laralum\Blog\Models\Settings',
         ],
-        'prefix' => config('laralum.settings.base_url'),
+        'prefix'    => config('laralum.settings.base_url'),
         'namespace' => 'Laralum\Blog\Controllers',
-        'as' => 'laralum::blog.'
+        'as'        => 'laralum::blog.',
     ], function () {
         Route::post('/blog/settings', 'SettingsController@update')->name('settings.update');
-});
+    });

@@ -1,9 +1,9 @@
 <?php
 
-use Laralum\Blog\Models\Settings;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Laralum\Blog\Models\Settings;
 
 class CreateLaralumBlogSettings extends Migration
 {
@@ -22,8 +22,8 @@ class CreateLaralumBlogSettings extends Migration
         });
 
         Settings::create([
-            'text_editor' => "markdown",
-            'public_url' => "blog",
+            'text_editor' => 'markdown',
+            'public_url'  => 'blog',
         ]);
     }
 

@@ -2,9 +2,9 @@
 
 namespace Laralum\Blog\Policies;
 
-use Laralum\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Laralum\Blog\Models\Category;
+use Laralum\Users\Models\User;
 
 class CategoryPolicy
 {
@@ -26,7 +26,8 @@ class CategoryPolicy
     /**
      * Determine if the current user can access categories.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function access($user)
@@ -34,11 +35,11 @@ class CategoryPolicy
         return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.access');
     }
 
-
     /**
      * Determine if the current user can create categories.
      *
-     * @param  mixed  $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function create($user)
@@ -49,7 +50,8 @@ class CategoryPolicy
     /**
      * Determine if the current user can view categories.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function view($user)
@@ -60,7 +62,8 @@ class CategoryPolicy
     /**
      * Determine if the current user can update categories.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function update($user, Category $category)
@@ -68,14 +71,15 @@ class CategoryPolicy
         if ($category->user->id == $user->id) {
             return true;
         }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.update');
     }
-
 
     /**
      * Determine if the current user can delete categories.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function delete($user, Category $category)
@@ -86,6 +90,6 @@ class CategoryPolicy
 
         $user = User::findOrFail($user->id);
 
-        return ($user->superAdmin() || $user->hasPermission('laralum::blog.categories.delete'));
+        return $user->superAdmin() || $user->hasPermission('laralum::blog.categories.delete');
     }
 }

@@ -4,18 +4,17 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Laralum\Blog\Models\Post;
-use Laralum\Blog\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Post;
 
 class CommentController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Post  $post
+     * @param \Illuminate\Http\Request  $request
+     * @param \Laralum\Blog\Models\Post $post
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,8 +39,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param \Illuminate\Http\Request     $request
+     * @param \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -54,18 +53,17 @@ class CommentController extends Controller
         ]);
 
         $comment->update([
-            'comment' => $request->comment
+            'comment' => $request->comment,
         ]);
 
         return redirect()->route('laralum::blog.posts.show', ['post' => $comment->post->id])->with('success', __('laralum_blog::general.comment_updated', ['id' => $comment->id]));
-
     }
 
     /**
      * confirm destroy of the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param \Illuminate\Http\Request     $request
+     * @param \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -74,16 +72,16 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
 
         return view('laralum::pages.confirmation', [
-            'method' => 'DELETE',
+            'method'  => 'DELETE',
             'message' => __('laralum_blog::general.sure_del_comment', ['comment' => $comment->comment]),
-            'action' => route('laralum::blog.comments.destroy', ['comment' => $comment->id]),
+            'action'  => route('laralum::blog.comments.destroy', ['comment' => $comment->id]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -92,6 +90,7 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
 
         $comment->delete();
+
         return redirect()->route('laralum::blog.posts.show', ['category' => $comment->post->id])->with('success', __('laralum_blog::general.comment_deleted', ['id' => $comment->id]));
     }
 }

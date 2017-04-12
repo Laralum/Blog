@@ -11,9 +11,9 @@ class Settings extends Model
      *
      * @var string
      */
-	protected $table = 'laralum_blog_settings';
+    protected $table = 'laralum_blog_settings';
 
-	/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

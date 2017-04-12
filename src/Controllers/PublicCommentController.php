@@ -4,19 +4,17 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Laralum\Blog\Models\Category;
-use Laralum\Blog\Models\Post;
-use Laralum\Blog\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Post;
 
 class PublicCommentController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Post  $post
+     * @param \Illuminate\Http\Request  $request
+     * @param \Laralum\Blog\Models\Post $post
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,8 +39,8 @@ class PublicCommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param \Illuminate\Http\Request     $request
+     * @param \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -55,7 +53,7 @@ class PublicCommentController extends Controller
         ]);
 
         $comment->update([
-            'comment' => $request->comment
+            'comment' => $request->comment,
         ]);
 
         return redirect()->route('laralum_public::blog.posts.show', ['post' => $comment->post->id])
@@ -65,7 +63,7 @@ class PublicCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Laralum\Blog\Models\Comment $comment
+     * @param \Laralum\Blog\Models\Comment $comment
      *
      * @return \Illuminate\Http\Response
      */
@@ -74,6 +72,7 @@ class PublicCommentController extends Controller
         $this->authorize('publicDelete', $comment);
 
         $comment->delete();
+
         return redirect()->route('laralum_public::blog.posts.show', ['post' => $comment->post->id])
             ->with('success', __('laralum_blog::general.comment_deleted', ['id' => $comment->id]));
     }
