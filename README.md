@@ -14,7 +14,6 @@
 ## Description
 
 This module is the complete implementation of a manageable blog from Laralum dashboard.
-
 It includes categories, posts & comments implementation, and the acces to these features is managed by sundry permissions.
 
 *Includes sample public views*
