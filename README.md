@@ -5,8 +5,10 @@
 
 <p align="center">
 <a href="https://styleci.io/repos/83248616"><img src="https://styleci.io/repos/83248616/shield?style=flat&branch=master" alt="StyleCI"></a>
-<a href="https://github.com/laralum/blog"><img src="https://poser.pugx.org/laralum/blog/d/total.svg" alt="Downloads"></a>
 <a href="https://github.com/laralum"><img src="https://img.shields.io/badge/Built%20For-Laralum-orange.svg" alt="Laralum"></a>
+<a href="https://github.com/laralum/Blog"><img src="https://poser.pugx.org/laralum/blog/d/total.svg" alt="Downloads"></a>
+<a href="https://github.com/Laralum/Blog/releases"><img src="https://poser.pugx.org/laralum/blog/v/stable.svg" alt="License"></a>
+<a href="https://raw.githubusercontent.com/Laralum/Blog/master/LICENSE"><img src="https://poser.pugx.org/laralum/blog/license.svg" alt="License"></a>
 </p>
 
 ## Description
