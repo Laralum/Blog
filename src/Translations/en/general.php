@@ -83,4 +83,7 @@ return [
     'text_editor_desc'      => 'Select a text editor for messages',
     'save_settings'         => 'Update Blog settings',
     'blog_settings_updated' => 'Blog settings updated',
+
+    'latest_blog_comments'  => 'Latest Blog Comments',
+    'new_comments'          => 'New Comments'
 ];

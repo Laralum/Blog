@@ -1,0 +1,6 @@
+[
+    {
+        "view": "laralum_blog::widgets.comments",
+        "permission": "laralum::blog.comments.access"
+    }
+]
