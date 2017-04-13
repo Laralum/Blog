@@ -85,5 +85,5 @@ return [
     'blog_settings_updated' => 'Blog settings updated',
 
     'latest_blog_comments'  => 'Latest Blog Comments',
-    'new_comments'          => 'New Comments'
+    'new_comments'          => 'New Comments',
 ];
