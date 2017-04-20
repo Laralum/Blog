@@ -151,7 +151,7 @@ class BlogServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $this->publishes([
-            __DIR__.'/Views/public' => resource_path('views/vendor/laralum/blog'),
+            __DIR__.'/Views/public' => resource_path('views/vendor/laralum_blog/public'),
         ], 'laralum_blog');
 
         $this->loadViewsFrom(__DIR__.'/Views', 'laralum_blog');
