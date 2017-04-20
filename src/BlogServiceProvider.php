@@ -149,11 +149,11 @@ class BlogServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        
+
         $this->publishes([
             __DIR__.'/Views/public' => resource_path('views/vendor/laralum/blog'),
         ], 'laralum_blog');
-        
+
         $this->loadViewsFrom(__DIR__.'/Views', 'laralum_blog');
 
         $this->loadTranslationsFrom(__DIR__.'/Translations', 'laralum_blog');
