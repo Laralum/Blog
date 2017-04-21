@@ -68,10 +68,6 @@ class CategoryPolicy
      */
     public function update($user, Category $category)
     {
-        if ($category->user->id == $user->id) {
-            return true;
-        }
-
         return User::findOrFail($user->id)->hasPermission('laralum::blog.categories.update');
     }
 

@@ -81,6 +81,10 @@ return [
     'markdown'              => 'Markdown',
     'wysiwyg'               => 'WYSIWYG',
     'text_editor_desc'      => 'Select a text editor for messages',
+    'unauthorized_action'   => 'Unauthorized Action',
+    'unauthorized_desc'     => "You're not allowed to update the blog settings.",
+    'contact_webmaster'     => 'If you think you should be able to update it, please contact webmaster.',
+    'save_settings'         => 'Save blog settings',
     'save_settings'         => 'Update Blog settings',
     'blog_settings_updated' => 'Blog settings updated',
 
