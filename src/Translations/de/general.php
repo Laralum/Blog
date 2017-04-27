@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'home'                  => 'Zuhause',
+    'home'                  => 'Start',
     'name'                  => 'Name',
     'actions'               => 'Aktionen',
     'delete'                => 'Löschen',
@@ -16,11 +16,11 @@ return [
     'update'                => 'Aktualisieren',
     'create'                => 'Erstellen',
     'description'           => 'Beschreibung',
-    'submit'                => 'Einreichen',
-    'cancel'                => 'Stornieren',
+    'submit'                => 'Absenden',
+    'cancel'                => 'Abbrechen',
     'content'               => 'Inhalt',
     'title'                 => 'Titel',
-    'view'                  => 'Aussicht',
+    'view'                  => 'Vorschau',
     'category'              => 'Kategorie',
     'view_category'         => 'Kategorie anzeigen',
     'category_posts'        => 'Kategorie Beiträge',
@@ -47,7 +47,7 @@ return [
     'post_updated'          => 'Beitrag #:id aktualisiert!',
     'post_deleted'          => 'Beitrag #:id gelöscht!',
     'create_post'           => 'Beitrag erstellen',
-    'create_post_desc'      => 'Erstelle einen neuen Beitrag zur Datenbank',
+    'create_post_desc'      => 'Erstelle einen neuen Beitrag in der Datenbank',
     'edit_post_desc'        => 'Sie bearbeiten Post #:id erstellt :time_ago',
     'written_by'            => 'Geschrieben von :username :time_ago. Posted in :cat Kategorie.',
     'comments_choice'       => ':num Kommentar | :num Kommentare',
