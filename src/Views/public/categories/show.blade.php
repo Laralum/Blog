@@ -12,6 +12,7 @@
             @if ($category->posts->count())
                 @foreach ($category->posts as $post)
                     <div>
+                        <img src="{{ $post->image }}" alt="">
                         <h3>{{ $post->title }}</h3>
                         <p><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
                         <p>{{ $post->description }}</p>

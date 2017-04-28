@@ -30,10 +30,10 @@
                     <span>
                         <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
                         @can('delete', $post)
-                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}"> <i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete_post')</a>
+                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
                         @endcan
                         @can('edit', $post)
-                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit_post')</a>
+                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
                         @endcan
                     </span>
                 </div>

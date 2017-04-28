@@ -42,7 +42,7 @@
             <hr>
         @endif
 
-
+        <img src="{{ $post->image }}" alt="">
         <h1>{{ $post->title }}</h1>
         <p>@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->title])</p>
         <p>{!! $post->content !!}</p>

@@ -16,6 +16,9 @@
             @foreach ($category->posts as $post)
                 <div>
                     <div class="uk-card uk-card-default">
+                        <div class="uk-card-media-top">
+                            <img src="{{ $post->image }}" alt="">
+                        </div>
                         <div class="uk-card-header">
                             <div class="uk-grid-small uk-flex-middle" uk-grid>
                                 <div class="uk-width-expand">
