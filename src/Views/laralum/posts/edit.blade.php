@@ -45,6 +45,12 @@
                                     </div>
                                 </div>
                                 <div class="uk-margin">
+                                    <label class="uk-form-label">@lang('laralum_blog::general.image_url')</label>
+                                    <div class="uk-form-controls">
+                                        <input value="{{ old('image', $post->image) }}" name="image" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.image_url_ph')">
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
                                     <label class="uk-form-label">@lang('laralum_blog::general.description')</label>
                                     <div class="uk-form-controls">
                                         <input value="{{ old('description', $post->description) }}" name="description" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.description')">

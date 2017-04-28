@@ -49,6 +49,8 @@ return [
     'create_post'           => 'Beitrag erstellen',
     'create_post_desc'      => 'Erstelle einen neuen Beitrag in der Datenbank',
     'edit_post_desc'        => 'Sie bearbeiten Post #:id erstellt :time_ago',
+    'image_url'             => "Bild URL",
+    'image_url_ph'          => "Füge eine Bild-URL ein, um den Beitrag zu repräsentieren",
     'written_by'            => 'Geschrieben von :username :time_ago. Posted in :cat Kategorie.',
     'comments_choice'       => ':num Kommentar | :num Kommentare',
     'comments'              => 'Bemerkungen',

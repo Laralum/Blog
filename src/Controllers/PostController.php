@@ -35,8 +35,9 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
         $this->validate($request, [
-            'title'       => 'required|max:255',
-            'description' => 'required|max:255',
+            'title'       => 'required|max:191',
+            'description' => 'required|max:191',
+            'image'       => 'max:191',
             'category'    => 'required|exists:laralum_blog_categories,id',
             'content'     => 'required|max:2000',
         ]);
@@ -52,6 +53,7 @@ class PostController extends Controller
         Post::create([
             'title'       => $request->title,
             'description' => $request->description,
+            'image'       => $request->image,
             'content'     => $msg,
             'user_id'     => Auth::id(),
             'category_id' => $request->category,
@@ -101,9 +103,10 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
         $this->validate($request, [
-            'title'       => 'required|max:255',
+            'title'       => 'required|max:191',
+            'description' => 'required|max:191',
+            'image'       => 'max:191',
             'category'    => 'required|exists:laralum_blog_categories,id',
-            'description' => 'required|max:255',
             'content'     => 'required|max:2000',
         ]);
 
@@ -117,6 +120,7 @@ class PostController extends Controller
 
         $post->update([
             'title'       => $request->title,
+            'image'       => $request->image,
             'category_id' => $request->category,
             'description' => $request->description,
             'content'     => $msg,

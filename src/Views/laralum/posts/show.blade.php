@@ -11,9 +11,12 @@
     </ul>
 @endsection
 @section('content')
-<div class="uk-container uk-container-large">
+<div class="uk-container">
     <div class="uk-child-width-1-1@s uk-grid-match" uk-grid>
     <div>
+        <div class="uk-card-media-top">
+            <img src="{{ $post->image }}" alt="">
+        </div>
         <div class="uk-card uk-card-default uk-card-body">
             <article class="uk-article">
 

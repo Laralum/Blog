@@ -58,6 +58,9 @@ return [
     'create_post_desc'  => 'Create a new post to the database',
     'edit_post_desc'    => "You're editing post #:id created :time_ago",
 
+    'image_url'         => 'Image URL',
+    'image_url_ph'      => 'Paste an image URL to represent the post',
+
     'written_by'        => 'Written by :username :time_ago. Posted in :cat category.',
     'comments_choice'   => ':num comment|:num comments',
     'comments'          => 'Comments',
