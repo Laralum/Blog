@@ -14,8 +14,8 @@
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
         @if ($posts->count())
             @foreach ($posts as $post)
-                <div>
-                    <div class="uk-card uk-card-default">
+                <div class="uk-margin-remove">
+                    <div class="uk-card uk-card-default uk-margin-medium-bottom">
                         <div class="uk-card-media-top">
                             <img src="{{ $post->image }}" alt="">
                         </div>
@@ -23,7 +23,7 @@
                             <div class="uk-grid-small uk-flex-middle" uk-grid>
                                 <div class="uk-width-expand">
                                     <h3 class="uk-card-title uk-margin-remove-bottom">{{ $post->title }}</h3>
-                                    <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
+                                    <p class="uk-text-meta uk-margin-remove-top"><time>{{ $post->created_at->diffForHumans() }}</time></p>
                                 </div>
                             </div>
                         </div>
