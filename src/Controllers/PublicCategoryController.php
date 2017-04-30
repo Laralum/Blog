@@ -14,7 +14,7 @@ class PublicCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(20);
 
         return view('laralum_blog::public.categories.index', ['categories' => $categories]);
     }
@@ -28,6 +28,8 @@ class PublicCategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('laralum_blog::public.categories.show', ['category' => $category]);
+        $posts = $category->posts()->orderByDesc('id')->paginate(10);
+
+        return view('laralum_blog::public.categories.show', ['category' => $category, 'posts' => $posts]);
     }
 }

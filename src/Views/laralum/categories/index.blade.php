@@ -68,6 +68,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        @include('laralum::layouts.pagination', ['paginator' => $categories])
                     </div>
                 </div>
             </div>

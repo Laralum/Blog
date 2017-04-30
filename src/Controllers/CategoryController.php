@@ -17,7 +17,7 @@ class CategoryController extends Controller
     {
         $this->authorize('view', Category::class);
 
-        $categories = Category::all();
+        $categories = Category::paginate(20);
 
         return view('laralum_blog::laralum.categories.index', ['categories' => $categories]);
     }
@@ -66,7 +66,9 @@ class CategoryController extends Controller
     {
         $this->authorize('view', Category::class);
 
-        return view('laralum_blog::laralum.categories.show', ['category' => $category]);
+        $posts = $category->posts()->orderByDesc('id')->paginate(10);
+
+        return view('laralum_blog::laralum.categories.show', ['category' => $category, 'posts' => $posts]);
     }
 
     /**

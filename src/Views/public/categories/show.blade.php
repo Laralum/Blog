@@ -9,8 +9,8 @@
     <body>
         <h1>@lang('laralum_blog::general.category_posts')</h1>
         <div>
-            @if ($category->posts->count())
-                @foreach ($category->posts as $post)
+            @if ($posts->count())
+                @foreach ($posts as $post)
                     <div>
                         <img src="{{ $post->image }}" alt="">
                         <h3>{{ $post->title }}</h3>
@@ -20,6 +20,7 @@
                         <span>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</span>
                     </div>
                 @endforeach
+                {{ $posts->links() }}
             @else
                 <div class="uk-width-1-1">
                     <div class="uk-card uk-card-default uk-card-body">

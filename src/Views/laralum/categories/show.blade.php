@@ -12,8 +12,8 @@
 @section('content')
 <div class="uk-container uk-container-large">
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
-        @if ($category->posts->count())
-            @foreach ($category->posts as $post)
+        @if ($posts->count())
+            @foreach ($posts as $post)
                 <div>
                     <div class="uk-card uk-card-default">
                         <div class="uk-card-media-top">
@@ -47,5 +47,6 @@
             </div>
         @endif
     </div>
+    @include('laralum::layouts.pagination', ['paginator' => $posts])
 </div>
 @endsection
