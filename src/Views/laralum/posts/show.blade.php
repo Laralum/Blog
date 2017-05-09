@@ -14,31 +14,30 @@
 <div class="uk-container">
     <div class="uk-child-width-1-1@s uk-grid-match" uk-grid>
     <div>
-        <div class="uk-card-media-top">
-            <img src="{{ $post->image }}" alt="">
-        </div>
-        <div class="uk-card uk-card-default uk-card-body">
-            <article class="uk-article">
-
-                <h1 class="uk-article-title"><a class="uk-link-reset" href="">{{ $post->title }}</a></h1>
-                <p class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->name])</p>
-
-                <p>{!! $post->content !!}</p>
-
-                <br>
-                <div class="uk-grid-small uk-child-width-1-1" uk-grid>
-                    <span>
-                        <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
-                        @can('delete', $post)
-                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
-                        @endcan
-                        @can('edit', $post)
-                            <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
-                        @endcan
-                    </span>
-                </div>
-
-            </article>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top">
+                <img @if($post->image) src="{{ $post->image }}" class="uk-width-1-1" alt="image" @endif>
+            </div>
+            <div class="uk-card-body">
+                <article class="uk-article">
+                    <h1 class="uk-article-title"><a class="uk-link-reset" href="">{{ $post->title }}</a></h1>
+                    <p class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->name])</p>
+                    <br>
+                    <p>{!! $post->content !!}</p>
+                    <br>
+                    <div class="uk-grid-small uk-child-width-1-1 uk-margin-small-top" uk-grid>
+                        <span>
+                            <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                            @can('delete', $post)
+                                <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
+                            @endcan
+                            @can('edit', $post)
+                                <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
+                            @endcan
+                        </span>
+                    </div>
+                </article>
+            </div>
         </div>
     </div>
     </div>

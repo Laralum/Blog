@@ -9,6 +9,13 @@
         <li><span>@lang('laralum_blog::general.category_posts')</span></li>
     </ul>
 @endsection
+@section('css')
+    <style media="screen">
+        .uk-card-media-top {
+            height:   350px;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="uk-container uk-container-large">
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
@@ -16,8 +23,8 @@
             @foreach ($posts as $post)
                 <div class="uk-margin-remove">
                     <div class="uk-card uk-card-default uk-margin-medium-bottom">
-                        <div class="uk-card-media-top">
-                            <img src="{{ $post->image }}" alt="">
+                        <div class="uk-card-media-top uk-overflow-hidden">
+                            <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-width-1-1 uk-height-responsive" alt="image">
                         </div>
                         <div class="uk-card-header">
                             <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -27,10 +34,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="uk-card-body">
-                            <p>{{ $post->description }}</p>
+                        <div class="uk-card-body uk-height-match">
+                            {{ $post->description }}
                         </div>
-                        <div class="uk-card-footer">
+                        <div class="uk-card-footer ">
                             <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
                             <span class="uk-align-right">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
                         </div>
