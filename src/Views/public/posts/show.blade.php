@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>@lang('laralum_blog::general.view_post') - {{ Laralum\Settings\Models\Settings::first()->appname }}</title>
+        <link rel="stylesheet" href="https://gitcdn.xyz/repo/24aitor/CLMaterial/master/src/css/clmaterial.min.css">
         <style>
             .hidden {
                 display: none;
