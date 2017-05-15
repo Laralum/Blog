@@ -28,7 +28,7 @@ class PublicCategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $posts = $category->posts()->orderByDesc('id')->paginate(10);
+        $posts = $category->posts()->where('public', true)->orderByDesc('id')->paginate(10);
 
         return view('laralum_blog::public.categories.show', ['category' => $category, 'posts' => $posts]);
     }
