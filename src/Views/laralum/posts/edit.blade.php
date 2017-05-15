@@ -90,6 +90,10 @@
                                 </div>
 
                                 <div class="uk-margin">
+                                    <label><input class="uk-checkbox" type="checkbox" name="public" @can('publish', \Laralum\Blog\Models\Post::class) {{ old('public') ? 'checked' : $post->public}} @else disabled @endif> @lang('laralum_blog::general.public')</label>
+                                </div>
+
+                                <div class="uk-margin">
                                     <a href="{{ route('laralum::blog.categories.show', ['category' => $category->id]) }}" class="uk-button uk-button-default uk-align-left">@lang('laralum_blog::general.cancel')</a>
                                     <button type="submit" class="uk-button uk-button-primary uk-align-right">
                                         <span class="ion-forward"></span>&nbsp; {{ __('laralum_blog::general.edit_post') }}

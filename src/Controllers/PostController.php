@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laralum\Users\Models\User;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Settings;
@@ -50,12 +51,15 @@ class PostController extends Controller
             $msg = htmlentities($request->content);
         }
 
+        $user = User::findOrFail(Auth::id());
+
         Post::create([
             'title'       => $request->title,
             'description' => $request->description,
             'image'       => $request->image,
             'content'     => $msg,
             'user_id'     => Auth::id(),
+            'public'      => $user->can('publish', Post::class) ? $request->has('public') : false,
             'category_id' => $request->category,
         ]);
 
@@ -118,11 +122,14 @@ class PostController extends Controller
             $msg = htmlentities($request->content);
         }
 
+        $user = User::findOrFail(Auth::id());
+
         $post->update([
             'title'       => $request->title,
             'image'       => $request->image,
             'category_id' => $request->category,
             'description' => $request->description,
+            'public'      => $user->can('publish', Post::class) ? $request->has('public') : false,
             'content'     => $msg,
         ]);
 

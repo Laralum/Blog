@@ -85,6 +85,11 @@ class BlogServiceProvider extends ServiceProvider
             'desc' => 'Allows delete blog posts',
         ],
         [
+            'name' => 'Publish Blog Posts',
+            'slug' => 'laralum::blog.posts.publish',
+            'desc' => 'Allows publish blog posts',
+        ],
+        [
             'name' => 'Blog Comments Access',
             'slug' => 'laralum::blog.comments.access',
             'desc' => 'Grants access to blog comments',

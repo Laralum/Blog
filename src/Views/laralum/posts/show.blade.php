@@ -21,7 +21,12 @@
             <div class="uk-card-body">
                 <article class="uk-article">
                     <h1 class="uk-article-title"><a class="uk-link-reset" href="">{{ $post->title }}</a></h1>
-                    <p class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->name])</p>
+                    <span class="uk-article-meta">@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->name])</span>
+                    @if ($post->public)
+                        <span class="uk-label uk-label-success">@lang('laralum_blog::general.published')</span>
+                    @else
+                        <span class="uk-label uk-label-warning">@lang('laralum_blog::general.unpublished')</span>
+                    @endif
                     <br>
                     <p>{!! $post->content !!}</p>
                     <br>
@@ -31,7 +36,7 @@
                             @can('delete', $post)
                                 <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
                             @endcan
-                            @can('edit', $post)
+                            @can('update', $post)
                                 <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
                             @endcan
                         </span>

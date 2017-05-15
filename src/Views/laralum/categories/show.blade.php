@@ -34,12 +34,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="uk-card-body uk-height-match">
+                        <div class="uk-card-body">
                             {{ $post->description }}
                         </div>
-                        <div class="uk-card-footer ">
-                            <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view_post')</a>
-                            <span class="uk-align-right">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+                        <div class="uk-card-footer uk-child-width-expand@s uk-text-center uk-grid">
+                                <div>
+                                    <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text uk-float-left uk-display-inline">@lang('laralum_blog::general.view_post')</a>
+                                </div>
+                                <div>
+                                    @if ($post->public)
+                                        <span class="uk-label uk-label-success uk-display-block">@lang('laralum_blog::general.published')</span>
+                                    @else
+                                        <span class="uk-label uk-label-warning uk-display-block">@lang('laralum_blog::general.unpublished')</span>
+                                    @endif
+                                </div>
+                                <div>
+                                    <span class="uk-float-right uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+                                </div>
                         </div>
                     </div>
                 </div>

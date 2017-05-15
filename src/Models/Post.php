@@ -19,7 +19,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'category_id', 'title', 'description', 'content', 'image'];
+    protected $fillable = ['user_id', 'category_id', 'title', 'description', 'content', 'image', 'public'];
 
     public function category()
     {

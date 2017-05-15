@@ -80,4 +80,8 @@ return [
     'blog_settings_updated' => 'Impostazioni del blog aggiornati',
     'latest_blog_comments'  => 'Ultimi Commenti Blog',
     'new_comments'          => 'Nuovi commenti',
+
+    'public'      => 'Pubblico',
+    'published'   => 'Pubblicato',
+    'unpublished' => 'Non pubblicata',
 ];

@@ -97,4 +97,17 @@ class PostPolicy
 
         return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.delete');
     }
+
+    /**
+     * Determine if the current user can publish posts.
+     *
+     * @param mixed                     $user
+     * @param \Laralum\Blog\Models\Post $post
+     *
+     * @return bool
+     */
+    public function publish($user)
+    {
+        return User::findOrFail($user->id)->hasPermission('laralum::blog.posts.publish');
+    }
 }

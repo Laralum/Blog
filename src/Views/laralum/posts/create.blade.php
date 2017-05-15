@@ -87,10 +87,16 @@
                                 </div>
 
                                 <div class="uk-margin">
+                                    <label><input class="uk-checkbox" type="checkbox" name="public" @can('publish', \Laralum\Blog\Models\Post::class) {{ !old('public') ?: 'checked' }} @else disabled @endif> @lang('laralum_blog::general.public')</label>
+                                </div>
+
+                                <div class="uk-margin">
                                     <button type="submit" class="uk-button uk-button-primary uk-align-right">
                                         <span class="ion-forward"></span>&nbsp; {{ __('laralum_blog::general.create_post') }}
                                     </button>
                                 </div>
+
+
                             </fieldset>
                         </form>
                     </div>

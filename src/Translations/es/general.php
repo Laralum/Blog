@@ -79,4 +79,8 @@ return [
     'blog_settings_updated' => 'Configuración del blog actualizada',
     'latest_blog_comments'  => 'Últimos comentarios de blog',
     'new_comments'          => 'Nuevos Comentarios',
+
+    'public'      => 'Público',
+    'published'   => 'Publicado',
+    'unpublished' => 'No Publicado',
 ];

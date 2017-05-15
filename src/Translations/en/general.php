@@ -93,4 +93,8 @@ return [
 
     'latest_blog_comments'  => 'Latest Blog Comments',
     'new_comments'          => 'New Comments',
+
+    'public'      => 'Public',
+    'published'   => 'Published',
+    'unpublished' => 'Unpublished',
 ];
