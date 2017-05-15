@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laralum\Users\Models\User;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Settings;
+use Laralum\Users\Models\User;
 
 class PostController extends Controller
 {
