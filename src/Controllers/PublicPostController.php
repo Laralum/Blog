@@ -17,6 +17,8 @@ class PublicPostController extends Controller
      */
     public function show(Category $category, Post $post)
     {
+        abort_if(!$post->public, 404);
+
         return view('laralum_blog::public.posts.show', ['post' => $post]);
     }
 }
