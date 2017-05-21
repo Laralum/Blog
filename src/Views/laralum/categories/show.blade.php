@@ -37,7 +37,8 @@
                         <div class="uk-card-body">
                             {{ $post->description }}
                         </div>
-                        <div class="uk-card-footer uk-child-width-expand@s uk-text-center uk-grid">
+                        <div class="uk-card-footer">
+                            <div class="uk-child-width-expand@s uk-text-center" uk-grid>
                                 <div>
                                     <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text uk-float-left uk-display-inline">@lang('laralum_blog::general.view_post')</a>
                                 </div>
@@ -51,6 +52,7 @@
                                 <div>
                                     <span class="uk-float-right uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
