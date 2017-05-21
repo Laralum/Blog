@@ -12,7 +12,6 @@
 @endsection
 @section('content')
 <div class="uk-container">
-    <div class="uk-child-width-1-1@s uk-grid-match" uk-grid>
     <div>
         <div class="uk-card uk-card-default">
             <div class="uk-card-media-top uk-overflow-hidden" style="max-height:500px;">
@@ -44,7 +43,6 @@
                 </article>
             </div>
         </div>
-    </div>
     </div>
     <br><br><br>
     @can('access', \Laralum\Blog\Models\Comment::class)
