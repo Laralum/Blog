@@ -9,13 +9,6 @@
         <li><span>@lang('laralum_blog::general.category_posts')</span></li>
     </ul>
 @endsection
-@section('css')
-    <style media="screen">
-        .uk-card-media-top {
-            height:   350px;
-        }
-    </style>
-@endsection
 @section('content')
 <div class="uk-container uk-container-large">
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
@@ -23,7 +16,7 @@
             @foreach ($posts as $post)
                 <div class="uk-margin-remove">
                     <div class="uk-card uk-card-default uk-margin-medium-bottom">
-                        <div class="uk-card-media-top uk-overflow-hidden">
+                        <div class="uk-card-media-top uk-overflow-hidden" style="height:350px;">
                             <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-width-1-1 uk-height-responsive" alt="image">
                         </div>
                         <div class="uk-card-header">
