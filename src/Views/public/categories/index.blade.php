@@ -11,7 +11,7 @@ $categories - Categories that will be displayed
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>@lang('laralum_blog::general.category_list') - {{ \Laralum\Settings\Models\Settings::first()->appname }}</title>
-        <link rel="stylesheet" href="https://gitcdn.xyz/repo/24aitor/CLMaterial/master/src/css/clmaterial.min.css">
+        <link rel="stylesheet" href="{{ \Laralum\Laralum\Packages::css() }}">
     </head>
     <body>
         <h1>@lang('laralum_blog::general.category_list')</h1>
