@@ -4,6 +4,7 @@ namespace Laralum\Blog\Controllers;
 
 use App\Http\Controllers\Controller;
 use Laralum\Blog\Models\Category;
+use Laralum\Blog\Models\Post;
 
 class PublicCategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class PublicCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(20);
+        $categories = Category::all();
 
         return view('laralum_blog::public.categories.index', ['categories' => $categories]);
     }
@@ -22,14 +23,18 @@ class PublicCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Laralum\Blog\Models\Category $category
+     * @param int $category
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($category = null)
     {
-        $posts = $category->posts()->where('public', true)->orderByDesc('id')->paginate(10);
+        if (is_null($category)) {
+            $posts = Post::all()->where('public', true)->sortByDesc('id');
+        } else {
+            $posts = Category::findOrFail($category)->posts()->where('public', true)->orderByDesc('id')->get();
+        }
 
-        return view('laralum_blog::public.categories.show', ['category' => $category, 'posts' => $posts]);
+        return view('laralum_blog::public.categories.show', ['posts' => $posts]);
     }
 }

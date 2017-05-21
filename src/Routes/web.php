@@ -5,6 +5,8 @@ if (\Illuminate\Support\Facades\Schema::hasTable('laralum_blog_settings')) {
 } else {
     $public_url = 'blog';
 }
+
+// Public routes
 Route::group([
         'middleware' => [
             'web', 'laralum.base',
@@ -13,9 +15,9 @@ Route::group([
         'prefix'    => $public_url,
         'as'        => 'laralum_public::blog.',
     ], function () use ($public_url) {
-        Route::get('/', 'PublicCategoryController@index')->name('categories.index');
-        Route::get('/categories/{category}', 'PublicCategoryController@show')->name('categories.show');
-        Route::get('/posts/{post}', 'PublicPostController@show')->name('posts.show');
+        Route::get('/categories', 'PublicCategoryController@index')->name('categories.index');
+        Route::get('/{category?}', 'PublicCategoryController@show')->name('categories.show');
+        Route::get('/post/{post}', 'PublicPostController@show')->name('posts.show');
 
         Route::group([
                 'middleware' => [
@@ -28,6 +30,7 @@ Route::group([
             });
     });
 
+// Administration routes
 Route::group([
         'middleware' => [
             'web', 'laralum.base', 'laralum.auth',
@@ -59,6 +62,7 @@ Route::group([
             });
     });
 
+// Settings routes
 Route::group([
         'middleware' => [
             'web', 'laralum.base', 'laralum.auth',
