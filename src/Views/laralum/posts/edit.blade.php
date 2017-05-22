@@ -90,7 +90,7 @@
                                 </div>
 
                                 <div class="uk-margin">
-                                    <label><input class="uk-checkbox" type="checkbox" name="public" @can('publish', \Laralum\Blog\Models\Post::class) {{ old('public') ? 'checked' : $post->public}} @else disabled @endif> @lang('laralum_blog::general.public')</label>
+                                    <label><input class="uk-checkbox" type="checkbox" name="public" @can('publish', \Laralum\Blog\Models\Post::class) {{ old('public', $post->public) ? 'checked="checked"' : '' }} @else disabled @endif> @lang('laralum_blog::general.public')</label>
                                 </div>
 
                                 <div class="uk-margin">
