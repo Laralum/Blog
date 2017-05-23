@@ -29,14 +29,16 @@
                     <br>
                     <p>{!! $post->content !!}</p>
                     <br>
-                    <div class="uk-grid-small uk-child-width-1-1 uk-margin-small-top" uk-grid>
-                        <span>
-                            <a class="uk-button uk-button-text" href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                    <div class="uk-grid-small uk-child-width-1-2@s uk-margin-small-top" uk-grid>
+                        <div class="uk-margin-top">
+                            <a class="uk-button uk-button-text uk-align-center uk-align-left@s uk-button" href="#comments"  uk-scroll>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                        </div>
+                        <span class="uk-margin-top">
                             @can('delete', $post)
-                                <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
+                                <a class="uk-button uk-button-text uk-align-left uk-align-right@s" href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}">@lang('laralum_blog::general.delete_post')</a>
                             @endcan
                             @can('update', $post)
-                                <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
+                                <a class="uk-button uk-button-text uk-align-right uk-align-right@s" href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}">@lang('laralum_blog::general.edit_post')</a>
                             @endcan
                         </span>
                     </div>
@@ -65,13 +67,13 @@
                                 </div>
                             </header>
                             <div class="uk-comment-body">
+                                <p class="comment">{{ $comment->comment }}</p>
                                 @can('delete', $comment)
                                     <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.comments.destroy.confirm',['comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
                                 @endcan
                                 @can('update', $comment)
                                     <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum::blog.comments.update',['comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
                                 @endcan
-                                <p class="comment">{{ $comment->comment }}</p>
                             </div>
                         </article>
                         <br>
