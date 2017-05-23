@@ -43,7 +43,7 @@ return [
     'delete_post'           => 'Cancella un messaggio',
     'view_post_desc'        => 'Stai visualizzando posta #:id',
     'post_id'               => 'Messaggio #:id',
-    'post_created'          => 'Messaggio Create!',
+    'post_created'          => 'Messaggio creato!',
     'post_updated'          => 'Post #:id aggiornato!',
     'post_deleted'          => 'Messaggio #:id cancellato!',
     'create_post'           => 'Crea Messaggio',

@@ -41,6 +41,7 @@ class PostController extends Controller
             'image'       => 'max:191',
             'category'    => 'required|exists:laralum_blog_categories,id',
             'content'     => 'required|max:2000',
+            'public'      => 'required|boolean',
         ]);
 
         if (Settings::first()->text_editor == 'markdown') {
@@ -59,12 +60,12 @@ class PostController extends Controller
             'image'       => $request->image,
             'content'     => $msg,
             'user_id'     => Auth::id(),
-            'public'      => $user->can('publish', Post::class) ? $request->has('public') : false,
+            'public'      => $user->can('publish', Post::class) ? $request->public : false,
             'category_id' => $request->category,
         ]);
 
         return redirect()->route('laralum::blog.categories.show', ['category' => $request->category])
-            ->with('success', __('laralum_blog::general.category_added'));
+            ->with('success', __('laralum_blog::general.post_created'));
     }
 
     /**
@@ -112,6 +113,7 @@ class PostController extends Controller
             'image'       => 'max:191',
             'category'    => 'required|exists:laralum_blog_categories,id',
             'content'     => 'required|max:2000',
+            'public'      => 'required|boolean',
         ]);
 
         if (Settings::first()->text_editor == 'markdown') {
@@ -129,7 +131,7 @@ class PostController extends Controller
             'image'       => $request->image,
             'category_id' => $request->category,
             'description' => $request->description,
-            'public'      => $user->can('publish', Post::class) ? $request->has('public') : false,
+            'public'      => $user->can('publish', Post::class) ? $request->public : false,
             'content'     => $msg,
         ]);
 

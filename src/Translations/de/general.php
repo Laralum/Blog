@@ -43,7 +43,7 @@ return [
     'delete_post'           => 'Beitrag entfernen',
     'view_post_desc'        => 'Du siehst Post #:id',
     'post_id'               => 'Beitrag #:id',
-    'post_created'          => 'Beitrag erstellen!',
+    'post_created'          => 'Beitrag erstellt!',
     'post_updated'          => 'Beitrag #:id aktualisiert!',
     'post_deleted'          => 'Beitrag #:id gelöscht!',
     'create_post'           => 'Beitrag erstellen',

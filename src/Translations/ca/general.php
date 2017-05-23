@@ -43,7 +43,7 @@ return [
     'delete_post'           => 'Eliminar Publicació',
     'view_post_desc'        => 'Vostè està veient la publiació #:id',
     'post_id'               => 'Publicació #:id',
-    'post_created'          => 'Publicació Creada!',
+    'post_created'          => 'Publicació creada!',
     'post_updated'          => 'Publicació #:id actualitzada!',
     'post_deleted'          => 'Publicació #:id esborrada!',
     'create_post'           => 'Crear Publicació',

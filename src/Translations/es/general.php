@@ -43,7 +43,7 @@ return [
     'delete_post'           => 'Eliminar Publicación',
     'view_post_desc'        => 'Usted está viendo la publicación #:id',
     'post_id'               => 'Publicación #:id',
-    'post_created'          => 'Publicar Crear!',
+    'post_created'          => 'Publicación creada!',
     'post_updated'          => 'Ppublicación #:id actualizada!',
     'post_deleted'          => 'Ppublicación #:id eliminada!',
     'create_post'           => 'Crear Publiación',

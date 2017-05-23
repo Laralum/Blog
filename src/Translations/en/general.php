@@ -47,7 +47,7 @@ return [
     'delete_post'    => 'Delete Post',
     'view_post_desc' => "You're viewing post #:id",
     'post_id'        => 'Post #:id',
-    'post_created'   => 'Post Create!',
+    'post_created'   => 'Post Created!',
     'post_updated'   => 'Post #:id updated!',
     'post_deleted'   => 'Post #:id deleted!',
 
