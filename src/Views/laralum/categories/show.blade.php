@@ -9,6 +9,33 @@
         <li><span>@lang('laralum_blog::general.category_posts')</span></li>
     </ul>
 @endsection
+@section('css')
+    <style>
+    .image-parent {
+        height:350px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-child {
+        height:350px;
+        min-width:100%;
+        position: absolute;
+        top: -9999px;
+        bottom: -9999px;
+        left: -9999px;
+        right: -9999px;
+        margin: auto;
+    }
+
+    .description-box {
+         resize:none;
+         border-color:#FFF;
+         height:75px;
+    }
+
+    </style>
+@endsection
 @section('content')
 <div class="uk-container uk-container-large">
     <div class="uk-child-width-1-2@m uk-child-width-1-1@s uk-grid-match" uk-grid>
@@ -16,8 +43,8 @@
             @foreach ($posts as $post)
                 <div class="uk-margin-remove">
                     <div class="uk-card uk-card-default uk-margin-medium-bottom">
-                        <div class="uk-card-media-top uk-overflow-hidden" style="height:350px;">
-                            <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-width-1-1 uk-height-responsive" alt="image">
+                        <div class="uk-card-media-top uk-overflow-hidden image-parent">
+                            <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-preserve-width image-child" alt="image">
                         </div>
                         <div class="uk-card-header">
                             <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -27,23 +54,34 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="uk-card-body">
-                            {{ $post->description }}
-                        </div>
+                            <div class="uk-card-body uk-panel-scrollable uk-margin-small uk-margin-small-left description-box">
+                                {{ $post->description }}
+                            </div>
                         <div class="uk-card-footer">
-                            <div class="uk-child-width-expand@s uk-text-center" uk-grid>
-                                <div>
-                                    <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text uk-float-left uk-display-inline">@lang('laralum_blog::general.view_post')</a>
-                                </div>
+                            <div class="uk-child-width-1-2 uk-text-center" uk-grid>
                                 <div>
                                     @if ($post->public)
-                                        <span class="uk-label uk-label-success uk-display-block">@lang('laralum_blog::general.published')</span>
+                                        <span class="uk-label uk-label-success uk-display-inline-block">@lang('laralum_blog::general.published')</span>
                                     @else
-                                        <span class="uk-label uk-label-warning uk-display-block">@lang('laralum_blog::general.unpublished')</span>
+                                        <span class="uk-label uk-label-warning uk-display-inline-block">@lang('laralum_blog::general.unpublished')</span>
                                     @endif
                                 </div>
                                 <div>
-                                    <span class="uk-float-right uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+                                    <span class="uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="uk-card-footer">
+                            <div class="uk-child-width-1-3 uk-text-center" uk-grid>
+                                <div>
+                                    <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view')</a>
+                                </div>
+                                <div>
+                                    <a href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.edit')</a>
+                                </div>
+                                <div>
+                                    <a href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.delete')</a>
                                 </div>
                             </div>
                         </div>
@@ -63,3 +101,14 @@
     @include('laralum::layouts.pagination', ['paginator' => $posts])
 </div>
 @endsection
+{{-- @section('css')
+    <script>
+        $(function () {
+
+            $.each(document.getElementsByClassName('card-img'), function (img) {
+                console.log($(this)[0].scrollWidth);
+                $(this).css({'margin-left':-($(this).prop('clientWidth')-$(this).width)/2});
+            } );
+        });
+    </script>
+@endsection --}}
