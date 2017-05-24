@@ -60,7 +60,6 @@ $post - The Post that will be displayed
                 </span>
             </div>
         </card>
-        <br><br><br>
         @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && \Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
             <div id="comments">
                 <card>
@@ -108,9 +107,11 @@ $post - The Post that will be displayed
                         <button type="submit" class="uk-button uk-button-primary">@lang('laralum_blog::general.submit')</button>
             </form>
         @elseif (\Laralum\Blog\Models\Settings::first()->comments_system == 'disqus')
-            @component('laralum_blog::disqus')
-                {{ \Laralum\Blog\Models\Settings::first()->disqus_username }}
-            @endcomponent
+            <card>
+                @component('laralum_blog::disqus')
+                    {{ \Laralum\Blog\Models\Settings::first()->disqus_username }}
+                @endcomponent
+            </card>
         @endif
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
