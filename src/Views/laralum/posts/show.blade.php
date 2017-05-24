@@ -31,7 +31,9 @@
                     <br>
                     <div class="uk-grid-small uk-child-width-1-2@s uk-margin-small-top" uk-grid>
                         <div class="uk-margin-top">
-                            <a class="uk-button uk-button-text uk-align-center uk-align-left@s uk-button" href="#comments"  uk-scroll>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                            @if (\Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
+                                <a class="uk-button uk-button-text uk-align-center uk-align-left@s uk-button" href="#comments"  uk-scroll>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                            @endif
                         </div>
                         <span class="uk-margin-top">
                             @can('delete', $post)
@@ -47,7 +49,7 @@
         </div>
     </div>
     <br><br><br>
-    @can('access', \Laralum\Blog\Models\Comment::class)
+    @if (\Auth::user()->can('access', \Laralum\Blog\Models\Comment::class) && \Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
         <div id="comments">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
@@ -124,7 +126,7 @@
                 </div>
             </fieldset>
         </form>
-    @endcan
+    @endif
 </div>
 @endsection
 @section('js')
