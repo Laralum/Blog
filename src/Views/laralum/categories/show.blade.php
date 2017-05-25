@@ -12,7 +12,7 @@
 @section('css')
     <style>
     .image-parent {
-        height:350px;
+        min-height:350px;
         position: relative;
         overflow: hidden;
     }
