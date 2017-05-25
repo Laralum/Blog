@@ -84,4 +84,11 @@ return [
     'public'      => 'Pubblico',
     'published'   => 'Pubblicato',
     'unpublished' => 'Non pubblicata',
+
+    'posts' => 'Messaggi',
+    'comments_system' => 'Commenti Sistema',
+    'disabled' => 'Disabilitato',
+    'disqus_website_shortname' => 'Disclaimer Sito Web',
+    'disqus_website_shortname_ph' => 'Inserisci il tuo sito web di disqus shortname',
+    'comments_system_desc' => 'Selezionare un sistema di commenti da utilizzare',
 ];

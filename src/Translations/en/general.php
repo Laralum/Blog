@@ -98,6 +98,7 @@ return [
     'published'   => 'Published',
     'unpublished' => 'Unpublished',
 
+    'posts'                        => 'Posts',
     'comments_system'              => 'Comments System',
     'disabled'                     => 'Disabled',
     'disqus_website_shortname'     => 'Disqus Website Shortname',

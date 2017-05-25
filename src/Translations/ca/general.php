@@ -83,4 +83,11 @@ return [
     'public'      => 'Públic',
     'published'   => 'Publicat',
     'unpublished' => 'No Publicat',
+
+    'posts' => 'Posts',
+    'comments_system' => 'Sistema de Comentaris',
+    'disabled' => 'Deshabilitat',
+    'disqus_website_shortname' => 'Shortname de Disqus',
+    'disqus_website_shortname_ph' => 'Introdueixi el identificador de disqus (shortname)',
+    'comments_system_desc' => "Seleccioneu el sistema de comentaris que voleu utilitzar",
 ];
