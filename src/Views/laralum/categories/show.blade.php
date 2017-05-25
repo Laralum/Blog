@@ -21,7 +21,7 @@
     }
 
     .image-child {
-        height:350px;
+        min-height:350px;
         min-width:100%;
         position: absolute;
         top: -9999px;
