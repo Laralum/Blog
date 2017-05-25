@@ -83,10 +83,10 @@ return [
     'published'             => 'опубликованный',
     'unpublished'           => 'неопубликованный',
 
-    'posts' => 'Сообщений',
-    'comments_system' => 'Система комментариев',
-    'disabled' => 'Отключено',
-    'disqus_website_shortname' => 'Краткое имя сайта Disqus',
+    'posts'                       => 'Сообщений',
+    'comments_system'             => 'Система комментариев',
+    'disabled'                    => 'Отключено',
+    'disqus_website_shortname'    => 'Краткое имя сайта Disqus',
     'disqus_website_shortname_ph' => 'Введите краткое имя сайта disqus',
-    'comments_system_desc' => 'Выберите систему комментариев для использования',
+    'comments_system_desc'        => 'Выберите систему комментариев для использования',
 ];

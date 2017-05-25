@@ -1,7 +1,7 @@
 <?php
 
 if (\Illuminate\Support\Facades\Schema::hasTable('laralum_blog_settings')) {
-    $public_url      = \Laralum\Blog\Models\Settings::first()->public_url;
+    $public_url = \Laralum\Blog\Models\Settings::first()->public_url;
     $comments_system = \Laralum\Blog\Models\Settings::first()->comments_system;
 } else {
     $public_url = 'blog';

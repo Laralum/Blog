@@ -86,10 +86,10 @@ return [
     'published'   => 'Veröffentlicht',
     'unpublished' => 'Unveröffentlicht',
 
-    'posts' => 'Beiträge',
-    'comments_system'           => 'Kommentar System',
-    'disqus_website_shortname'  => 'Disqus Website Shortname',
+    'posts'                       => 'Beiträge',
+    'comments_system'             => 'Kommentar System',
+    'disqus_website_shortname'    => 'Disqus Website Shortname',
     'disqus_website_shortname_ph' => 'Geben Sie Ihre disqus website shortname ein',
-    'comments_system_desc' => 'Wählen Sie ein zu verwendendes Kommentarsystem aus',
-    'disabled' => 'Behindert',
+    'comments_system_desc'        => 'Wählen Sie ein zu verwendendes Kommentarsystem aus',
+    'disabled'                    => 'Behindert',
 ];
