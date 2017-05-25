@@ -30,11 +30,31 @@
                 </div>
             </div>
 
-                <div class="uk-margin uk-align-right">
-                    <button type="submit" class="uk-button uk-button-primary">
-                        <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.save_settings')
-                    </button>
+            <div class="uk-margin">
+                <label class="uk-form-label">@lang('laralum_blog::general.text_editor')</label>
+                <div class="uk-form-controls">
+                    <select name="comments_system" class="uk-select">
+                        <option value="" @if(!$settings->comments_system) selected @endif disabled>@lang('laralum_blog::general.comments_system')</option>
+                        <option @if($settings->comments_system == 'laralum') selected @endif value="laralum">laralum</option>
+                        <option @if($settings->comments_system == 'disqus') selected @endif value="disqus">disqus</option>
+                    </select>
+                    <small class="uk-text-meta">@lang('laralum_blog::general.comments_system_desc')</small>
                 </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label">@lang('laralum_blog::general.disqus_username')</label>
+                <div class="uk-form-controls">
+                    <input value="{{ old('navbar_color', $settings->disqus_username) }}" name="disqus_username" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.disqus_username')">
+                    <small class="uk-text-meta">@lang('laralum_blog::general.disqus_username')</small>
+                </div>
+            </div>
+
+            <div class="uk-margin uk-align-right">
+                <button type="submit" class="uk-button uk-button-primary">
+                    <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.save_settings')
+                </button>
+            </div>
 
             </fieldset>
         </form>

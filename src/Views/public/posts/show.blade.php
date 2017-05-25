@@ -60,8 +60,7 @@ $post - The Post that will be displayed
                 </span>
             </div>
         </card>
-        <br><br><br>
-        @can('publicAccess', \Laralum\Blog\Models\Comment::class)
+        @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && \Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
             <div id="comments">
                 <card>
                     <h3>@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
@@ -107,7 +106,13 @@ $post - The Post that will be displayed
                         <textarea name="comment" class="uk-textarea" id="comment-textarea" rows="8" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
                         <button type="submit" class="uk-button uk-button-primary">@lang('laralum_blog::general.submit')</button>
             </form>
-        @endcan
+        @elseif (\Laralum\Blog\Models\Settings::first()->comments_system == 'disqus')
+            <card>
+                @component('laralum_blog::disqus')
+                    {{ \Laralum\Blog\Models\Settings::first()->disqus_username }}
+                @endcomponent
+            </card>
+        @endif
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
         <script>
