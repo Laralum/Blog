@@ -18,5 +18,5 @@ class Settings extends Model
      *
      * @var array
      */
-    protected $fillable = ['text_editor', 'public_url', 'comments_system', 'disqus_username'];
+    protected $fillable = ['text_editor', 'public_url', 'comments_system', 'disqus_website_shortname'];
 }

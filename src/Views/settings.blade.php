@@ -31,22 +31,23 @@
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label">@lang('laralum_blog::general.text_editor')</label>
+                <label class="uk-form-label">@lang('laralum_blog::general.comments_system')</label>
                 <div class="uk-form-controls">
                     <select name="comments_system" class="uk-select">
-                        <option value="" @if(!$settings->comments_system) selected @endif disabled>@lang('laralum_blog::general.comments_system')</option>
-                        <option @if($settings->comments_system == 'laralum') selected @endif value="laralum">laralum</option>
-                        <option @if($settings->comments_system == 'disqus') selected @endif value="disqus">disqus</option>
+                        <option value="" @if(!$settings->comments_system) selected @endif disabled>@lang('laralum_blog::general.comments_system_desc')</option>
+                        <option @if($settings->comments_system == 'disabled') selected @endif value="disabled">@lang('laralum_blog::general.disabled')</option>
+                        <option @if($settings->comments_system == 'laralum') selected @endif value="laralum">Laralum</option>
+                        <option @if($settings->comments_system == 'disqus') selected @endif value="disqus">Disqus</option>
                     </select>
                     <small class="uk-text-meta">@lang('laralum_blog::general.comments_system_desc')</small>
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label">@lang('laralum_blog::general.disqus_username')</label>
+                <label class="uk-form-label">@lang('laralum_blog::general.disqus_website_shortname')</label>
                 <div class="uk-form-controls">
-                    <input value="{{ old('navbar_color', $settings->disqus_username) }}" name="disqus_username" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.disqus_username')">
-                    <small class="uk-text-meta">@lang('laralum_blog::general.disqus_username')</small>
+                    <input value="{{ old('disqus_website_shortname', $settings->disqus_website_shortname) }}" name="disqus_website_shortname" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.disqus_website_shortname_ph')">
+                    <small class="uk-text-meta">@lang('laralum_blog::general.disqus_website_shortname')</small>
                 </div>
             </div>
 

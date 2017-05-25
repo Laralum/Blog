@@ -23,14 +23,14 @@ class SettingsController extends Controller
         $this->validate($request, [
             'text_editor'     => 'required|in:plain-text,markdown,wysiwyg',
             'public_url'      => 'required|max:255',
-            'comments_system' => 'required|in:laralum,disqus',
+            'comments_system' => 'required|in:disabled,laralum,disqus',
         ]);
 
         Settings::first()->update([
-            'text_editor'     => $request->text_editor,
-            'public_url'      => $request->public_url,
-            'comments_system' => $request->comments_system,
-            'disqus_username' => $request->disqus_username,
+            'text_editor'              => $request->text_editor,
+            'public_url'               => $request->public_url,
+            'comments_system'          => $request->comments_system,
+            'disqus_website_shortname' => $request->disqus_website_shortname,
         ]);
 
         return redirect()->route('laralum::settings.index', ['p' => 'Blog'])->with('success', __('laralum_blog::general.blog_settings_updated'));

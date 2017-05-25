@@ -77,9 +77,6 @@ return [
     'sure_del_post'     => 'Are you sure you want to delete post ":post" ?',
     'sure_del_comment'  => 'Are you sure you want to delete comment ":comment" ?',
 
-    'comments_system'           => 'Comments System',
-    'disqus_username'           => 'Disqus Username',
-    'comments_system_desc'      => 'Select a comments system to use.',
     'public_url'                => 'Public URL',
     'select_editor'             => 'Please select a text editor',
     'text_editor'               => 'Text Editor',
@@ -100,4 +97,10 @@ return [
     'public'      => 'Public',
     'published'   => 'Published',
     'unpublished' => 'Unpublished',
+
+    'comments_system'              => 'Comments System',
+    'disabled'                     => 'Disabled',
+    'disqus_website_shortname'     => 'Disqus Website Shortname',
+    'disqus_website_shortname_ph'  => 'Enter your disqus website shortname',
+    'comments_system_desc'         => 'Select a comments system to use',
 ];

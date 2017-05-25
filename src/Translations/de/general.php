@@ -66,9 +66,6 @@ return [
     'sure_del_post'         => 'Bist du sicher, dass du den Beitrag ":post" löschen willst?',
     'sure_del_comment'      => 'Bist du dir sicher, dass du den Kommentar ":comment" löschen möchtest?',
 
-    'comments_system'           => 'Kommentar System',
-    'disqus_username'           => 'Disqus Username',
-    'comments_system_desc'      => 'Wähle ein Kommentar System aus.',
     'public_url'                => 'Öffentliche URL',
     'select_editor'             => 'Bitte wählen Sie einen Texteditor',
     'text_editor'               => 'Text-Editor',
@@ -88,4 +85,8 @@ return [
     'public'      => 'Öffentlichkeit',
     'published'   => 'Veröffentlicht',
     'unpublished' => 'Unveröffentlicht',
+
+    'comments_system'           => 'Kommentar System',
+    'disqus_website_shortname'  => 'Disqus Website Shortname',
+    'comments_system_desc'      => 'Wähle ein Kommentar System aus.',
 ];

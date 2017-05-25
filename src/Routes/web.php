@@ -1,9 +1,11 @@
 <?php
 
 if (\Illuminate\Support\Facades\Schema::hasTable('laralum_blog_settings')) {
-    $public_url = \Laralum\Blog\Models\Settings::first()->public_url;
+    $public_url      = \Laralum\Blog\Models\Settings::first()->public_url;
+    $comments_system = \Laralum\Blog\Models\Settings::first()->comments_system;
 } else {
     $public_url = 'blog';
+    $comments_system = 'laralum';
 }
 
 // Public routes
@@ -39,17 +41,18 @@ Route::group([
         'prefix'    => config('laralum.settings.base_url').'/blog',
         'namespace' => 'Laralum\Blog\Controllers',
         'as'        => 'laralum::blog.',
-    ], function () {
+    ], function () use ($comments_system) {
         Route::get('categories/{category}/delete', 'CategoryController@confirmDestroy')->name('categories.destroy.confirm');
         Route::resource('categories', 'CategoryController');
         Route::group([
                 'middleware' => [
                     'can:access,Laralum\Blog\Models\Post',
                 ],
-            ], function () {
+            ], function () use ($comments_system) {
                 Route::get('posts/{post}/delete', 'PostController@confirmDestroy')->name('posts.destroy.confirm');
                 Route::resource('posts', 'PostController', ['except' => ['index']]);
-                Route::group([
+                if ($comments_system == 'laralum') {
+                    Route::group([
                         'middleware' => [
                             'can:access,Laralum\Blog\Models\Comment',
                         ],
@@ -59,6 +62,7 @@ Route::group([
                         Route::get('comments/{comment}/destroy', 'CommentController@confirmDestroy')->name('comments.destroy.confirm');
                         Route::delete('comments/{comment}', 'CommentController@destroy')->name('comments.destroy');
                     });
+                }
             });
     });
 

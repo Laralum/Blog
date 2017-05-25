@@ -15,7 +15,7 @@ class AddDisqusSettingsColumnsLaralumBlogSettings extends Migration
     {
         Schema::table('laralum_blog_settings', function (Blueprint $table) {
             $table->string('comments_system')->default('laralum');
-            $table->string('disqus_username')->nullable();
+            $table->string('disqus_website_shortname')->nullable();
         });
     }
 
@@ -28,7 +28,7 @@ class AddDisqusSettingsColumnsLaralumBlogSettings extends Migration
     {
         Schema::table('laralum_blog_settings', function (Blueprint $table) {
             $table->dropColumn('comments_system');
-            $table->dropColumn('disqus_username');
+            $table->dropColumn('disqus_website_shortname');
         });
     }
 }

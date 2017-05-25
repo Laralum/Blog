@@ -4,6 +4,9 @@ In this file you have the following variables available:
 $post - The Post that will be displayed
 
 --}}
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -54,13 +57,15 @@ $post - The Post that will be displayed
             <p>@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->title])</p>
             <p>{!! $post->content !!}</p>
             <br>
+            @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
             <div class="uk-grid-small uk-child-width-1-1" uk-grid>
                 <span>
                     <a href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
                 </span>
             </div>
+            @endif
         </card>
-        @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && \Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
+        @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
             <div id="comments">
                 <card>
                     <h3>@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
@@ -71,13 +76,15 @@ $post - The Post that will be displayed
                                         <h4><span>{{ $comment->user->name }}</span></h4>
                                         <span>{{ $comment->created_at->diffForHumans() }}</span>
                                     @can('publicDelete', $comment)
-                                        <form id="del-form-{{$comment->id}}" action="{{ route('laralum_public::blog.comments.destroy',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}" method="post">
+                                        <form id="del-form-{{$comment->id}}"  hidden="hidden" action="{{ route('laralum_public::blog.comments.destroy',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <button type="submit" name="button">@lang('laralum_blog::general.delete')</button>
                                         </form>
                                     @endcan
-
+                                    <br>
+                                    <br>
+                                    <a type="submit" onclick="event.preventDefault(); document.getElementById('del-form-{{$comment->id}}').submit();" btn>@lang('laralum_blog::general.delete')</a>
                                     @can('publicUpdate', $comment)
                                         <button class="edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum_public::blog.comments.update',['category' => $post->category->id, 'post' => $post->id, 'comment' => $comment->id ]) }}">@lang('laralum_blog::general.edit')</button>
                                     @endcan
@@ -106,29 +113,28 @@ $post - The Post that will be displayed
                         <textarea name="comment" class="uk-textarea" id="comment-textarea" rows="8" placeholder="{{ __('laralum_blog::general.edit_a_comment') }}">{{ old('comment') }}</textarea>
                         <button type="submit" class="uk-button uk-button-primary">@lang('laralum_blog::general.submit')</button>
             </form>
-        @elseif (\Laralum\Blog\Models\Settings::first()->comments_system == 'disqus')
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+            <script>
+                $(function() {
+                    $('.edit-comment-button').click(function() {
+                        $('.edit-comment-button').prop('disabled', false);
+                        $(this).attr('disabled', 'disabled');
+                        var url = $(this).data('url');
+                        var comment = $(this).data('comment');
+                        $('#comment-textarea').html(comment);
+                        var form = $('#edit-comment-form').html();
+                        $('.edit-comment-form').hide();
+                        $('.comment').removeClass("hidden"); {{-- Show all comments --}}
+                        $(this).next().html('<form class="uk-form-stacked edit-comment-form uk-animation-scale-up" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form><p class="comment hidden">'+comment+'</p>');
+                    });
+                });
+            </script>
+        @elseif ($settings->comments_system == 'disqus')
             <card>
                 @component('laralum_blog::disqus')
-                    {{ \Laralum\Blog\Models\Settings::first()->disqus_username }}
+                    {{ \Laralum\Blog\Models\Settings::first()->disqus_website_shortname }}
                 @endcomponent
             </card>
         @endif
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-        <script>
-            $(function() {
-                $('.edit-comment-button').click(function() {
-                    $('.edit-comment-button').prop('disabled', false);
-                    $(this).attr('disabled', 'disabled');
-                    var url = $(this).data('url');
-                    var comment = $(this).data('comment');
-                    $('#comment-textarea').html(comment);
-                    var form = $('#edit-comment-form').html();
-                    $('.edit-comment-form').hide();
-                    $('.comment').removeClass("hidden"); {{-- Show all comments --}}
-                    $(this).next().html('<form class="uk-form-stacked edit-comment-form uk-animation-scale-up" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form><p class="comment hidden">'+comment+'</p>');
-                });
-            });
-        </script>
     </body>
 </html>

@@ -1,3 +1,6 @@
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 @extends('laralum::layouts.master')
 @section('icon', 'ion-stop')
 @section('title', __('laralum_blog::general.category_posts'))
@@ -43,46 +46,44 @@
             @foreach ($posts as $post)
                 <div class="uk-margin-remove">
                     <div class="uk-card uk-card-default uk-margin-medium-bottom">
-                        <div class="uk-card-media-top uk-overflow-hidden image-parent">
-                            <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-preserve-width image-child" alt="image">
-                        </div>
-                        <div class="uk-card-header">
-                            <div class="uk-grid-small uk-flex-middle" uk-grid>
-                                <div class="uk-width-expand">
-                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ $post->title }}</h3>
-                                    <p class="uk-text-meta uk-margin-remove-top"><time>{{ $post->created_at->diffForHumans() }}</time></p>
+                        <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-link-reset">
+                            <div class="uk-card-media-top uk-overflow-hidden image-parent">
+                                <img src="{{ $post->image ? $post->image : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=Image&w=500&h=250' }}" class="uk-preserve-width image-child" alt="image">
+                            </div>
+                            <div class="uk-card-header">
+                                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                    <div class="uk-width-expand">
+                                        <h3 class="uk-card-title uk-margin-remove-bottom">{{ $post->title }}</h3>
+                                        <p class="uk-text-meta uk-margin-remove-top"><time>{{ $post->created_at->diffForHumans() }}</time></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
                             <div class="uk-card-body uk-panel-scrollable uk-margin-small uk-margin-small-left description-box">
                                 {{ $post->description }}
                             </div>
+                        </a>
                         <div class="uk-card-footer">
-                            <div class="uk-child-width-1-2 uk-text-center" uk-grid>
+                            <div class="{{($settings->comments_system == 'laralum') ? 'uk-child-width-1-2' : 'uk-child-width-1-1'}} uk-text-center" uk-grid>
                                 <div>
                                     @if ($post->public)
-                                        <span class="uk-label uk-label-success uk-display-inline-block">@lang('laralum_blog::general.published')</span>
+                                        <span class="uk-label uk-label-success">@lang('laralum_blog::general.published')</span>
                                     @else
                                         <span class="uk-label uk-label-warning uk-display-inline-block">@lang('laralum_blog::general.unpublished')</span>
                                     @endif
                                 </div>
-                                <div>
-                                    <span class="uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
-                                </div>
+                                @if($settings->comments_system == 'laralum')
+                                    <div>
+                                        <span class="uk-display-inline">{{ $post->comments->count() }} <i style="font-size:20px;" class="icon ion-chatboxes"></i></span>
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
                         <div class="uk-card-footer">
-                            <div class="uk-child-width-1-3 uk-text-center" uk-grid>
-                                <div>
-                                    <a href="{{ route('laralum::blog.posts.show', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.view')</a>
-                                </div>
-                                <div>
-                                    <a href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.edit')</a>
-                                </div>
-                                <div>
-                                    <a href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.delete')</a>
-                                </div>
+                            <div class="uk-child-width-1-2 uk-text-center" uk-grid>
+                                <div><a href="{{ route('laralum::blog.posts.edit', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.edit')</a></div>
+                                <div><a href="{{ route('laralum::blog.posts.destroy.confirm', ['post' => $post->id]) }}" class="uk-button uk-button-text">@lang('laralum_blog::general.delete')</a></div>
                             </div>
                         </div>
                     </div>
@@ -101,14 +102,3 @@
     @include('laralum::layouts.pagination', ['paginator' => $posts])
 </div>
 @endsection
-{{-- @section('css')
-    <script>
-        $(function () {
-
-            $.each(document.getElementsByClassName('card-img'), function (img) {
-                console.log($(this)[0].scrollWidth);
-                $(this).css({'margin-left':-($(this).prop('clientWidth')-$(this).width)/2});
-            } );
-        });
-    </script>
-@endsection --}}

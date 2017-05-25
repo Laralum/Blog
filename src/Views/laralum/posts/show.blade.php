@@ -1,3 +1,6 @@
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 @extends('laralum::layouts.master')
 @section('icon', 'ion-eye')
 @section('title', __('laralum_blog::general.view_post'))
@@ -31,7 +34,7 @@
                     <br>
                     <div class="uk-grid-small uk-child-width-1-2@s uk-margin-small-top" uk-grid>
                         <div class="uk-margin-top">
-                            @if (\Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
+                            @if ($settings->comments_system == 'laralum')
                                 <a class="uk-button uk-button-text uk-align-center uk-align-left@s uk-button" href="#comments"  uk-scroll>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
                             @endif
                         </div>
@@ -49,7 +52,7 @@
         </div>
     </div>
     <br><br><br>
-    @if (\Auth::user()->can('access', \Laralum\Blog\Models\Comment::class) && \Laralum\Blog\Models\Settings::first()->comments_system == 'laralum')
+    @if (\Auth::user()->can('access', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
         <div id="comments">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title">@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
@@ -69,13 +72,13 @@
                                 </div>
                             </header>
                             <div class="uk-comment-body">
-                                <p class="comment">{{ $comment->comment }}</p>
                                 @can('delete', $comment)
                                     <a class="uk-button uk-button-text uk-align-right" href="{{ route('laralum::blog.comments.destroy.confirm',['comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-trash-b"></i> @lang('laralum_blog::general.delete')</a>
                                 @endcan
                                 @can('update', $comment)
-                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-comment="{{ $comment->comment }}" data-url="{{ route('laralum::blog.comments.update',['comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
+                                    <button class="uk-button uk-button-text uk-align-right edit-comment-button" data-url="{{ route('laralum::blog.comments.update',['comment' => $comment->id ]) }}"><i style="font-size:18px;" class="icon ion-edit"></i> @lang('laralum_blog::general.edit')</button>
                                 @endcan
+                                <p class="comment-box uk-text-nowrap">{{ $comment->comment }}</p>
                             </div>
                         </article>
                         <br>
@@ -126,23 +129,36 @@
                 </div>
             </fieldset>
         </form>
+    @elseif ($settings->comments_system == 'disqus')
+        <div>
+            <div class="uk-card uk-card-default uk-card-body">
+                @component('laralum_blog::disqus')
+                    {{ \Laralum\Blog\Models\Settings::first()->disqus_website_shortname }}
+                @endcomponent
+            </div>
+        </div>
     @endif
 </div>
 @endsection
 @section('js')
-    <script>
-        $(function() {
-            $('.edit-comment-button').click(function() {
-                $('.edit-comment-button').prop('disabled', false);
-                $(this).attr('disabled', 'disabled');
-                var url = $(this).data('url');
-                var comment = $(this).data('comment');
-                $('#comment-textarea').html(comment);
-                var form = $('#edit-comment-form').html();
-                $('.edit-comment-form').hide();
-                $('.comment').removeClass("uk-hidden"); {{-- Show all comments --}}
-                $(this).next().html('<form class="uk-form-stacked edit-comment-form uk-animation-scale-up" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form><p class="comment uk-hidden">'+comment+'</p>');
+    @if (\Auth::user()->can('access', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
+        <script>
+            $(function() {
+                $('.edit-comment-button').click(function() {
+                    console.log('here1')
+                    $('.edit-comment-button').prop('disabled', false);
+                    $(this).attr('disabled', 'disabled');
+                    var url = $(this).data('url');
+                    // var comment = $(this).data('comment');
+                    var comment = $(this).next('.comment-box').html();
+                    $('#comment-textarea').html(comment);
+                    var form = $('#edit-comment-form').html();
+                    $('.edit-comment-form').hide();
+                    $('.comment').removeClass("uk-hidden"); {{-- Show all comments --}}
+                    $(this).next('.comment-box').html('<form class="uk-form-stacked edit-comment-form uk-animation-scale-up" id="edit-comment-form" action="' + url + '" method="POST">' + form + '</form><p class="comment uk-hidden">'+comment+'</p>');
+                    console.log(form)
+                });
             });
-        });
-    </script>
+        </script>
+    @endif
 @endsection

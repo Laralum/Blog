@@ -4,6 +4,9 @@ In this file you have the following variables available:
 $posts - Posts that will be displayed
 
 --}}
+@php
+    $settings = \Laralum\Blog\Models\Settings::first();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,7 +27,9 @@ $posts - Posts that will be displayed
                         <p><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
                         <p>{{ $post->description }}</p>
                         <a href="{{ route('laralum_public::blog.posts.show', ['post' => $post->id]) }}" >@lang('laralum_blog::general.view_post')</a>
-                        <span>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</span>
+                        @if($settings->comments_system == 'laralum')
+                            <span>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</span>
+                        @endif
                     </card>
                 @endforeach
             @else
