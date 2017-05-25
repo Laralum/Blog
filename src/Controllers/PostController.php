@@ -40,7 +40,7 @@ class PostController extends Controller
             'description' => 'required|max:191',
             'image'       => 'max:191',
             'category'    => 'required|exists:laralum_blog_categories,id',
-            'content'     => 'required|max:2000',
+            'content'     => 'required',
             'public'      => 'required|boolean',
         ]);
 
