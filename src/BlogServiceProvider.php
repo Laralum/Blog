@@ -105,11 +105,6 @@ class BlogServiceProvider extends ServiceProvider
             'desc' => 'Allows updating blog comments',
         ],
         [
-            'name' => 'View Blog Comments',
-            'slug' => 'laralum::blog.comments.view',
-            'desc' => 'Allows view blog comments',
-        ],
-        [
             'name' => 'Delete Blog Comments',
             'slug' => 'laralum::blog.comments.delete',
             'desc' => 'Allows delete blog comments',
@@ -128,11 +123,6 @@ class BlogServiceProvider extends ServiceProvider
             'name' => 'Update Blog Comments (public)',
             'slug' => 'laralum::blog.comments.update-public',
             'desc' => 'Allows updating blog comments',
-        ],
-        [
-            'name' => 'View Blog Comments (public)',
-            'slug' => 'laralum::blog.comments.view-public',
-            'desc' => 'Allows view blog comments',
         ],
         [
             'name' => 'Delete Blog Comments (public)',

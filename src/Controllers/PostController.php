@@ -77,8 +77,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $this->authorize('view', $post);
-
         return view('laralum_blog::.laralum.posts.show', ['post' => $post]);
     }
 

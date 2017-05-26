@@ -57,21 +57,20 @@ $post - The Post that will be displayed
             <p>@lang('laralum_blog::general.written_by', ['username' => $post->user->name, 'time_ago' => $post->created_at->diffForHumans(), 'cat' => $post->category->title])</p>
             <p>{!! $post->content !!}</p>
             <br>
-            @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
-            <div class="uk-grid-small uk-child-width-1-1" uk-grid>
-                <span>
-                    <a href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
-                </span>
-            </div>
+            @if($settings->comments_system == 'laralum' && !$settings->public_permissions)
+                <div class="uk-grid-small uk-child-width-1-1" uk-grid>
+                    <span>
+                        <a href="#comments">{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</a>
+                    </span>
+                </div>
             @endif
         </card>
-        @if (\Auth::user()->can('publicAccess', \Laralum\Blog\Models\Comment::class) && $settings->comments_system == 'laralum')
+        @if($settings->comments_system == 'laralum' && !$settings->public_permissions)
             <div id="comments">
                 <card>
                     <h3>@if($post->comments->count()) @lang('laralum_blog::general.comments') @else @lang('laralum_blog::general.no_comments_yet') @endif</h3>
                     @foreach ($post->comments as $comment)
 
-                        @can('view', $comment)
                                     <img src="{{ $comment->user->avatar() }}" style="max-width:100px;max-height:100px;border-radius:50px;">
                                         <h4><span>{{ $comment->user->name }}</span></h4>
                                         <span>{{ $comment->created_at->diffForHumans() }}</span>
@@ -90,7 +89,6 @@ $post - The Post that will be displayed
                                     @endcan
                                     <p class="comment">{{ $comment->comment }}</p>
                             <br>
-                        @endcan
                         <br><br><br>
                     @endforeach
                     <br><br><br><br><br><br>

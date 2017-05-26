@@ -27,7 +27,7 @@ $posts - Posts that will be displayed
                         <p><time datetime="2016-04-01T19:00">{{ $post->created_at->diffForHumans() }}</time></p>
                         <p>{{ $post->description }}</p>
                         <a href="{{ route('laralum_public::blog.posts.show', ['post' => $post->id]) }}" >@lang('laralum_blog::general.view_post')</a>
-                        @if($settings->comments_system == 'laralum')
+                        @if($settings->comments_system == 'laralum' && !$settings->public_permissions)
                             <span>{{ trans_choice('laralum_blog::general.comments_choice', $post->comments->count(), ['num' => $post->comments->count()]) }}</span>
                         @endif
                     </card>

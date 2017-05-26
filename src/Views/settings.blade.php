@@ -51,6 +51,16 @@
                 </div>
             </div>
 
+            <div class="uk-margin">
+                <label class="uk-form-label">@lang('laralum_blog::general.public_permissions')</label>
+                <div class="uk-form-controls">
+                    <input class="uk-hidden" name="public_permissions" value="0"/>
+                    <label><input class="uk-checkbox" type="checkbox" name="public_permissions" value="1" {{ !old('public_permissions', $settings->public_permissions) ?: 'checked="checked"' }}> @lang('laralum_blog::general.public_permissions')</label>
+                    <br>
+                    <small class="uk-text-meta">@lang('laralum_blog::general.public_permissions_desc')</small>
+                </div>
+            </div>
+
             <div class="uk-margin uk-align-right">
                 <button type="submit" class="uk-button uk-button-primary">
                     <span class="ion-forward"></span>&nbsp; @lang('laralum_blog::general.save_settings')

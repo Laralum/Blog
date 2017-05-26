@@ -104,4 +104,7 @@ return [
     'disqus_website_shortname'     => 'Disqus Website Shortname',
     'disqus_website_shortname_ph'  => 'Enter your disqus website shortname',
     'comments_system_desc'         => 'Select a comments system to use',
+
+    'public_permissions'           => 'Public Permissions',
+    'public_permissions_desc'      => 'Enable and require public permissions',
 ];

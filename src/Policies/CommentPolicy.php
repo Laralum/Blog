@@ -3,7 +3,9 @@
 namespace Laralum\Blog\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 use Laralum\Blog\Models\Comment;
+use Laralum\Blog\Models\Settings;
 use Laralum\Users\Models\User;
 
 class CommentPolicy
@@ -34,16 +36,19 @@ class CommentPolicy
     {
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.access');
     }
-
     /**
-     * Determine if the current user can access comments. (public).
+     * Determine if the current user can acces comments routes. (public).
      *
-     * @param mixed $user
+     * @param mixed                        $user
      *
      * @return bool
      */
     public function publicAccess($user)
     {
+        if (!Settings::first()->public_permissions) {
+            return true;
+        }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.access-public');
     }
 
@@ -68,6 +73,10 @@ class CommentPolicy
      */
     public function publicCreate($user)
     {
+        if (!Settings::first()->public_permissions) {
+            return true;
+        }
+
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.create-public');
     }
 
@@ -89,23 +98,6 @@ class CommentPolicy
     }
 
     /**
-     * Determine if the current user can view comments. (public).
-     *
-     * @param mixed                        $user
-     * @param \Laralum\Blog\Models\Comment $comment
-     *
-     * @return bool
-     */
-    public function publicView($user, Comment $comment)
-    {
-        if ($comment->user->id == $user->id) {
-            return true;
-        }
-
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.view-public');
-    }
-
-    /**
      * Determine if the current user can update comments.
      *
      * @param mixed                        $user
@@ -115,11 +107,12 @@ class CommentPolicy
      */
     public function update($user, Comment $comment)
     {
-        if ($comment->user->id == $user->id) {
+        $user = User::findOrFail($user->id);
+        if ($comment->user->id == $user->id || $user->hasPermission('laralum::blog.posts.update')) {
             return true;
         }
 
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.update');
+        return false;
     }
 
     /**
@@ -132,11 +125,13 @@ class CommentPolicy
      */
     public function publicUpdate($user, Comment $comment)
     {
-        if ($comment->user->id == $user->id) {
+        if (!Settings::first()->public_permissions || $comment->user->id == $user->id) {
             return true;
+        } elseif ($comment->user->id == $user->id) {
+            return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.delete-public');
         }
 
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.update-public');
+        return false;
     }
 
     /**
@@ -154,7 +149,7 @@ class CommentPolicy
             return true;
         }
 
-        return $user->hasPermission('laralum::blog.comments.delete');
+        return false;
     }
 
     /**
@@ -167,11 +162,12 @@ class CommentPolicy
      */
     public function publicDelete($user, Comment $comment)
     {
-        $user = User::findOrFail($user->id);
-        if ($comment->user->id == $user->id || $user->hasPermission('laralum::blog.posts.delete')) {
+        if (!Settings::first()->public_permissions && $comment->user->id == $user->id) {
             return true;
+        } elseif ($comment->user->id == $user->id) {
+            return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.delete-public');
         }
 
-        return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.delete-public');
+        return false;
     }
 }
