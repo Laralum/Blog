@@ -3,7 +3,6 @@
 namespace Laralum\Blog\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 use Laralum\Blog\Models\Comment;
 use Laralum\Blog\Models\Settings;
 use Laralum\Users\Models\User;
@@ -36,10 +35,11 @@ class CommentPolicy
     {
         return User::findOrFail($user->id)->hasPermission('laralum::blog.comments.access');
     }
+
     /**
      * Determine if the current user can acces comments routes. (public).
      *
-     * @param mixed                        $user
+     * @param mixed $user
      *
      * @return bool
      */
