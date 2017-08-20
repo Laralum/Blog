@@ -10,6 +10,7 @@ use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Settings;
 use Laralum\Users\Models\User;
+use Laralum\Files\Models\File;
 
 class PostController extends Controller
 {
@@ -22,7 +23,16 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
 
-        return view('laralum_blog::laralum.posts.create', ['categories' => Category::all()]);
+        $files = File::all()->where('public', 1);
+
+        $filtered = $files->filter(function ($file) {
+            return $file->type() == 'image';
+        });
+
+        return view('laralum_blog::laralum.posts.create', [
+            'categories' => Category::all(),
+            'files' => $filtered->all()
+        ]);
     }
 
     /**
@@ -91,7 +101,17 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        return view('laralum_blog::.laralum.posts.edit', ['post' => $post, 'categories' => Category::all()]);
+        $files = File::all()->where('public', 1);
+
+        $filtered = $files->filter(function ($file) {
+            return $file->type() == 'image';
+        });
+
+        return view('laralum_blog::laralum.posts.edit', [
+            'post' => $post,
+            'categories' => Category::all(),
+            'files' => $filtered->all()
+        ]);
     }
 
     /**

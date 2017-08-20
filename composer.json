@@ -2,7 +2,8 @@
     "name": "laralum/blog",
     "description": "Blog module for laralum",
     "require": {
-	"laralum/laralum": "1.*",
+        "laralum/laralum": "1.*",
+        "laralum/files": "1.*",
         "graham-campbell/markdown": "7.*",
         "league/html-to-markdown": "4.*"
 	},

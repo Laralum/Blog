@@ -44,10 +44,21 @@
                                         <input value="{{ old('title', $post->title) }}" name="title" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.title')">
                                     </div>
                                 </div>
+                                <script>
+                                    function changeURL() {
+                                        $('#image-url').val($('#image-selector').val());
+                                    }
+                                </script>
+                                <select class="uk-select" onchange="changeURL()" id="image-selector">
+                                        <option selected>Chose image to set url</option>
+                                    @foreach($files as $file)
+                                        <option value="{{ route('laralum_public::files.show', ['file' => $file->real_name]) }}">{{ $file->name }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="uk-margin">
                                     <label class="uk-form-label">@lang('laralum_blog::general.image_url')</label>
                                     <div class="uk-form-controls">
-                                        <input value="{{ old('image', $post->image) }}" name="image" class="uk-input" type="text" placeholder="@lang('laralum_blog::general.image_url_ph')">
+                                        <input value="{{ old('image', $post->image) }}" name="image" class="uk-input" id="image-url" type="text" placeholder="@lang('laralum_blog::general.image_url_ph')">
                                     </div>
                                 </div>
                                 <div class="uk-margin">
