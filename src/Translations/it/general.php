@@ -49,6 +49,7 @@ return [
     'create_post'           => 'Crea Messaggio',
     'create_post_desc'      => 'Creare un nuovo post al database',
     'edit_post_desc'        => 'Si sta modificando postale #:id creato :time_ago',
+    'choose_image'          => "Scegli un'immagine da Laralum Files...",
     'image_url'             => "URL dell'immagine",
     'image_url_ph'          => 'Incolla un URL di immagine per rappresentare il post',
     'written_by'            => 'Scritto da :username :time_ago. Pubblicato in categoria :cat.',

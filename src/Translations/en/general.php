@@ -58,6 +58,7 @@ return [
     'create_post_desc'  => 'Create a new post to the database',
     'edit_post_desc'    => "You're editing post #:id created :time_ago",
 
+    'choose_image'      => 'Choose an image from Laralum Files...',
     'image_url'         => 'Image URL',
     'image_url_ph'      => 'Paste an image URL to represent the post',
 

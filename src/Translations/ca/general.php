@@ -49,6 +49,7 @@ return [
     'create_post'           => 'Crear Publicació',
     'create_post_desc'      => 'Crear una nova entrada a la base de dades',
     'edit_post_desc'        => 'Està editant la publicació #:id creada :time_ago',
+    'choose_image'          => 'Tria una imatge de Laralum Files...',
     'image_url'             => 'URL de la imatge',
     'image_url_ph'          => 'Enganxa una URL de imatge per representar la publicació',
     'written_by'            => 'Escrit per :username :time_ago. Publicat a la categoria :cat.',

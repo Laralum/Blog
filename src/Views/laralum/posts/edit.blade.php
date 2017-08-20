@@ -50,7 +50,7 @@
                                     }
                                 </script>
                                 <select class="uk-select" onchange="changeURL()" id="image-selector">
-                                        <option selected>Chose image to set url</option>
+                                        <option selected>@lang('laralum_blog::general.choose_image')</option>
                                     @foreach($files as $file)
                                         <option value="{{ route('laralum_public::files.show', ['file' => $file->real_name]) }}">{{ $file->name }}</option>
                                     @endforeach

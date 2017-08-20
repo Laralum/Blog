@@ -49,6 +49,7 @@ return [
     'create_post'           => 'Создать запись',
     'create_post_desc'      => 'Создать новое сообщение в базе данных',
     'edit_post_desc'        => 'Вы редактируете запись #:id Создано :time_ago',
+    'choose_image'          => "Выберите изображение из файла Laralum Files...",
     'image_url'             => 'URL изображения',
     'image_url_ph'          => 'Вставьте URL изображения, чтобы представить запись',
     'written_by'            => 'Написано :username :time_ago. Опубликовано в :cat категории.',

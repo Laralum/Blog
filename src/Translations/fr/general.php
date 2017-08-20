@@ -49,6 +49,7 @@ return [
     'create_post'           => 'Créer un message',
     'create_post_desc'      => 'Créer une nouvelle publication dans la base de données',
     'edit_post_desc'        => 'Vous éditez le post #:id :time_ago créé',
+    'choose_image'          => 'Choisissez une image de Laralum Files...',
     'image_url'             => "URL de l'image",
     'image_url_ph'          => "Coller une URL d'image pour représenter la publication",
     'written_by'            => 'Écrit par :username :time_ago. Publié dans la catégorie :cat.',
