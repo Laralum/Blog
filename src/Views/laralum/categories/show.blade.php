@@ -99,6 +99,6 @@
             </div>
         @endif
     </div>
-    @include('laralum::layouts.pagination', ['paginator' => $posts])
+    {{ $posts->links('laralum::layouts.pagination') }}
 </div>
 @endsection
