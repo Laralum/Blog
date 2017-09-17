@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Laralum\Blog\Models\Category;
 use Laralum\Blog\Models\Post;
 use Laralum\Blog\Models\Settings;
-use Laralum\Users\Models\User;
 use Laralum\Files\Models\File;
+use Laralum\Users\Models\User;
 
 class PostController extends Controller
 {
@@ -31,7 +31,7 @@ class PostController extends Controller
 
         return view('laralum_blog::laralum.posts.create', [
             'categories' => Category::all(),
-            'files' => $filtered->all()
+            'files'      => $filtered->all(),
         ]);
     }
 
@@ -108,9 +108,9 @@ class PostController extends Controller
         });
 
         return view('laralum_blog::laralum.posts.edit', [
-            'post' => $post,
+            'post'       => $post,
             'categories' => Category::all(),
-            'files' => $filtered->all()
+            'files'      => $filtered->all(),
         ]);
     }
 
